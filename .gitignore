@@ -1,2 +1,5 @@
 .idea/*
 __pycache__
+www/node_modules
+www/.idea
+www/npm-debug.log

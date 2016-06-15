@@ -9,34 +9,19 @@ confirm_state = 'null'
 # student
 student_id = db.student.student_id
 student_name = db.student.student_name
-wechat_id = db.student.wechat_id
-house_room = db.student.house_room
+house_name = db.student.house_name
+room_number = db.student.room_number
+# phone_number = db.student.phone_number
+email = db.student.email
 
-
-sample_data = [
-    {
-        'logId': log_id,
-        'houseRoom': house_room,
-        'studentName': student_name,
-        'arriveDate': arrive_date,
-        'collectDate': collect_date,
-        'confirmState': confirm_state
-    },
-    {
-        'logId': log_id,
-        'houseRoom': house_room,
-        'studentName': student_name,
-        'arriveDate': arrive_date,
-        'collectDate': collect_date,
-        'confirmState': confirm_state
-    }
-]
 
 student_info = [
     {
         'studentId': student_id,
-        'wechatId': wechat_id,
         'studentName': student_name,
-        'houseRoom': house_room,
+        'houseName': house_name,
+        'roomNumber': room_number,
+        # 'phone_number': phone_number,
+        'email': email
     }
 ]

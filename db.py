@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ubuntu:@46.101.15.189/ubuntu'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ubuntu:@139.59.172.12/ubuntu'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -10,18 +10,22 @@ db = SQLAlchemy(app)
 class Student(db.Model):
     student_id = db.Column(db.Integer, primary_key=True)
     student_name = db.Column(db.Text)
-    wechat_id = db.Column(db.Text)
-    house_room = db.Column(db.Text)
+    house_name = db.Column(db.Text)
+    room_number = db.Column(db.Text)
+    phone_number = db.Column(db.Text)
+    email = db.Column(db.Text)
 
-    def __init__(self, student_id, student_name, wechat_id, house_room):
+    def __init__(self, student_id, student_name, house_name, room_number, phone_number, email):
         self.student_id = student_id
         self.student_name = student_name
-        self.wechat_id = wechat_id
-        self.house_room = house_room
+        self.house_name = house_name
+        self.room_number = room_number
+        self.phone_number = phone_number
+        self.email = email
 
 
 def query():
-    logs = Student.query.filter_by(student_name='QIAORUI CUI')
+    logs = Student.query.filter_by(student_name='Qiaorui Cui')
     return logs
 
 student = query().first()
