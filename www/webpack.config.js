@@ -1,31 +1,41 @@
-var debug = process.env.NODE_ENV !== "production";
-var webpack = require('webpack');
-var path = require('path');
+// Learn more on how to config.
+// - https://github.com/ant-tool/atool-build#配置扩展
 
-module.exports = {
-  context: path.join(__dirname, "src"),
-  devtool: debug ? "inline-sourcemap" : null,
-  entry: "./js/client.js",
-  module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['react', 'es2015', 'stage-0'],
-          plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
-        }
-      }
-    ]
-  },
-  output: {
-    path: __dirname + "/src/",
-    filename: "client.min.js"
-  },
-  plugins: debug ? [] : [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-  ],
+const webpack = require('atool-build/lib/webpack');
+const fs = require('fs');
+const path = require('path');
+const glob = require('glob');
+
+module.exports = function (webpackConfig) {
+  webpackConfig.babel.plugins.push('transform-runtime');
+  webpackConfig.babel.plugins.push(['antd', {
+    style: 'css',  // if true, use less
+  }]);
+
+  // Enable this if you have to support IE8.
+  // webpackConfig.module.loaders.unshift({
+  //   test: /\.jsx?$/,
+  //   loader: 'es3ify-loader',
+  // });
+
+  // Parse all less files as css module.
+  webpackConfig.module.loaders.forEach(function(loader, index) {
+    if (typeof loader.test === 'function' && loader.test.toString().indexOf('\\.less$') > -1) {
+      loader.test = /\.dont\.exist\.file/;
+    }
+    if (loader.test.toString() === '/\\.module\\.less$/') {
+      loader.test = /\.less$/;
+    }
+  });
+
+  // Load src/entries/*.js as entry automatically.
+  const files = glob.sync('./src/entries/*.js');
+  const newEntries = files.reduce(function(memo, file) {
+    const name = path.basename(file, '.js');
+    memo[name] = file;
+    return memo;
+  }, {});
+  webpackConfig.entry = Object.assign({}, webpackConfig.entry, newEntries);
+
+  return webpackConfig;
 };
