@@ -20,15 +20,16 @@ const MainLayout = ({ children }) => {
           {children}
         </div>
       </div>
-      <div className={styles.foot}>
-        Built with react, react-router, ant-tool, css-modules, antd...
-      </div>
+
     </div>
   );
 };
 
-MainLayout.propTypes = {
-  children: PropTypes.element.isRequired,
-};
+// Warning: Failed propType: Invalid prop `children` supplied to `MainLayout`, expected a single ReactElement.
+// Check the render method of `App`. (see code below)
+
+// MainLayout.propTypes = {
+//   children: PropTypes.element.isRequired,
+// };
 
 export default MainLayout;
