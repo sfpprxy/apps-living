@@ -5,26 +5,44 @@ import axios from 'axios';
 
 // export default class Test extends React.Component {
 const columns = [{
-  title: '姓名',
-  dataIndex: 'name',
+  title: 'Studnet ID',
+  dataIndex: 'studentId',
   sorter: true,
-  render: name => `${name.first} ${name.last}`,
-  width: '20%',
 }, {
-  title: '性别',
-  dataIndex: 'gender',
+  title: 'Studnet Name',
+  dataIndex: 'studentName',
+}, {
+  title: 'House Name',
+  dataIndex: 'houseName',
+  // TODO: change hard code below
   filters: [
-    { text: 'Male', value: 'male' },
-    { text: 'Female', value: 'female' },
+    { text: '26 WARWICK ROW', value: '26 WARWICK ROW' },
+    { text: '27 WARWICK ROW', value: '27 WARWICK ROW' },
+    { text: 'CASSELDEN HOUSE', value: 'CASSELDEN HOUSE' },
+    { text: 'FORTRESS HOUSE', value: 'FORTRESS HOUSE' },
+    { text: 'GULSON COURT', value: 'GULSON COURT' },
+    { text: 'PENNY BLACK HOUSE', value: 'PENNY BLACK HOUSE' },
+    { text: 'WATERS COURT', value: 'WATERS COURT' },
   ],
-  width: '20%',
+  sorter: true,
 }, {
-  title: '邮箱',
+  title: 'Room Number',
+  dataIndex: 'roomNumber',
+  sorter: true,
+}, {
+  title: 'Email Address',
   dataIndex: 'email',
+}, {
+  title: 'Operation',
+  render: (text, record) => (
+    <span>
+          <a href="#">Edit</a>
+        </span>
+  ),
 }];
 
 
-const Test0 = React.createClass({
+const Test1 = React.createClass({
   getInitialState() {
     return {
       data: [],
@@ -51,10 +69,10 @@ const Test0 = React.createClass({
     console.log('请求参数：', params);
     this.setState({ loading: true });
     reqwest({
-      url: 'http://api.randomuser.me',
+      url: 'http://127.0.0.1:5000/api/student',
       method: 'get',
       data: {
-        results: 20,
+        student: 20,
         ...params,
       },
       type: 'json',
@@ -62,12 +80,12 @@ const Test0 = React.createClass({
       const pagination = this.state.pagination;
       // Read total count from server
       // pagination.total = data.totalCount;
-      pagination.total = 200;
+      pagination.total = 245;
       console.log('aaaaa');
       console.log(data1);
       this.setState({
         loading: false,
-        tableData: data1.results,
+        tableData: data1.student,
         pagination,
       });
     });
@@ -99,7 +117,7 @@ const Test0 = React.createClass({
   render() {
     return (
       <Table columns={columns}
-             rowKey={record => record.registered}
+             rowKey={record => record.studentId}
              dataSource={this.state.tableData}
              pagination={this.state.pagination}
              loading={this.state.loading}
@@ -109,5 +127,5 @@ const Test0 = React.createClass({
   },
 });
 
-export default Test0;
+export default Test1;
 
