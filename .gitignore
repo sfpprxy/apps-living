@@ -5,3 +5,7 @@ www/.idea
 www/npm-debug.log
 
 www/README.md
+
+static/*
+
+www/dist/*

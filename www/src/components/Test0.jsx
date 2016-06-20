@@ -1,78 +1,37 @@
 import React from 'react';
-import {Table} from 'antd';
+import { Table } from 'antd';
 import reqwest from 'reqwest';
 import axios from 'axios';
 
-// const columns = [{
-//   title: '姓',
-//   dataIndex: 'name',
-//   sorter: true,
-//   render: name => `${name.first} ${name.last}`,
-//   width: '20%',
-// }, {
-//   title: '性别',
-//   dataIndex: 'gender',
-//   filters: [
-//     {text: 'Male', value: 'male'},
-//     {text: 'Female', value: 'female'},
-//   ],
-//   width: '20%',
-// }, {
-//   title: '邮箱',
-//   dataIndex: 'email',
-// }];
-
+// export default class Test extends React.Component {
 const columns = [{
-  title: 'Studnet ID',
-  dataIndex: 'studentId',
-  key: 'id',
+  title: '姓名',
+  dataIndex: 'name',
+  sorter: true,
+  render: name => `${name.first} ${name.last}`,
+  width: '20%',
 }, {
-  title: 'Studnet Name',
-  dataIndex: 'studentName',
-  key: 'name',
-}, {
-  title: 'House Name',
-  dataIndex: 'houseName',
-  key: 'houseName',
-  // TODO: change hard code below
+  title: '性别',
+  dataIndex: 'gender',
   filters: [
-    { text: '26 WARWICK ROW', value: '26 WARWICK ROW' },
-    { text: '27 WARWICK ROW', value: '27 WARWICK ROW' },
-    { text: 'CASSELDEN HOUSE', value: 'CASSELDEN HOUSE' },
-    { text: 'FORTRESS HOUSE', value: 'FORTRESS HOUSE' },
-    { text: 'GULSON COURT', value: 'GULSON COURT' },
-    { text: 'PENNY BLACK HOUSE', value: 'PENNY BLACK HOUSE' },
-    { text: 'WATERS COURT', value: 'WATERS COURT' },
+    { text: 'Male', value: 'male' },
+    { text: 'Female', value: 'female' },
   ],
+  width: '20%',
 }, {
-  title: 'Room Number',
-  dataIndex: 'roomNumber',
-  key: 'roomNumber',
-}, {
-  title: 'Email Address',
+  title: '邮箱',
   dataIndex: 'email',
-  key: 'email',
-}, {
-  title: 'Operation',
-  key: 'operation',
-  render: (text, record) => (
-    <span>
-          <a href="#">Edit {record.name}</a>
-        </span>
-  ),
 }];
 
-export default class Test extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
+const Test0 = React.createClass({
+  getInitialState() {
+    return {
       data: [],
       pagination: {},
       loading: false,
     };
-  }
-
+  },
   handleTableChange(pagination, filters, sorter) {
     const pager = this.state.pagination;
     pager.current = pagination.current;
@@ -80,17 +39,16 @@ export default class Test extends React.Component {
       pagination: pager,
     });
     this.fetch({
-      student: pagination.pageSize,
+      results: pagination.pageSize,
       page: pagination.current,
       sortField: sorter.field,
       sortOrder: sorter.order,
       ...filters,
     });
-  }
-
+  },
   fetch(params = {}) {
     console.log('请求参数：', params);
-    this.setState({loading: true});
+    this.setState({ loading: true });
     // reqwest({
     //   url: 'http://api.randomuser.me',
     //   method: 'get',
@@ -112,9 +70,9 @@ export default class Test extends React.Component {
     //     pagination,
     //   });
     // });
-    axios.get('http://127.0.0.1:5000/api/student', {
-      student: 20,
-      ...params,
+    axios.get('http://api.randomuser.me', {
+        results: 20,
+        ...params,
     })
       .then(jsonData => {
         const pagination = this.state.pagination;
@@ -125,19 +83,17 @@ export default class Test extends React.Component {
         console.log(jsonData);
         this.setState({
           loading: false,
-          tableData: jsonData.data.student,
+          tableData: jsonData.data.results,
           pagination,
         });
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
-
+  },
   componentDidMount() {
     this.fetch();
-  }
-
+  },
   render() {
     return (
       <Table columns={columns}
@@ -148,6 +104,8 @@ export default class Test extends React.Component {
              onChange={this.handleTableChange}
       />
     );
-  }
-}
+  },
+});
+
+export default Test0;
 

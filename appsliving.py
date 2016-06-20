@@ -1,13 +1,20 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+from flask.ext.cors import CORS
 import packer
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
+CORS(app)
+
+
+@app.route('/hello')
+def hello_world():
+    return 'Hello World!'
 
 
 @app.route('/')
-def hello_world():
-    return 'Hello World!'
+def root():
+    return app.send_static_file('index.html')
 
 
 @app.route('/api/sample', methods=['GET'])
@@ -18,6 +25,20 @@ def get_sample():
 @app.route('/api/student', methods=['GET'])
 def get_student():
     return jsonify({'student': packer.student_info})
+
+
+@app.route('/api/add', methods=['POST'])
+def post_add():
+    print('WOW!')
+    if request.json:
+        mydata = request.json # will be
+        print('OK')
+        print(mydata)
+        return 'OK to front'
+
+    else:
+        print('no json received')
+        return 'no json received'
 
 
 if __name__ == '__main__':
