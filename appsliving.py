@@ -22,9 +22,9 @@ def get_sample():
     return jsonify({'sampleData': packer.sample_data})
 
 
-@app.route('/api/student', methods=['GET'])
-def get_student():
-    return jsonify({'student': packer.student_info})
+@app.route('/api/student/<house_name>', methods=['GET'])
+def get_student(house_name):
+    return jsonify({'student': packer.get_student_list(house_name)})
 
 
 @app.route('/api/add', methods=['POST'])

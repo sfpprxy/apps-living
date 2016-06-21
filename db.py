@@ -24,35 +24,5 @@ class Student(db.Model):
         self.email = email
 
 
-def query():
-    logs = Student.query
-    return logs
 
-student = query()
-i = 0
-slist = []
-for _ in student:
-    student_id = _.student_id
-    student_name = _.student_name
-    house_name = _.house_name
-    room_number = _.room_number
-    # phone_number = _.phone_number
-    email = _.email
 
-    student_info = {
-            'studentId': student_id,
-            'studentName': student_name,
-            'houseName': house_name,
-            'roomNumber': room_number,
-            # 'phone_number': phone_number,
-            'email': email
-        }
-
-    i += 1
-    slist.append(student_info)
-print(i)
-print(slist)
-
-# print(dir(student))
-# print(type(student.house_name))
-# print(str(student.house_room))

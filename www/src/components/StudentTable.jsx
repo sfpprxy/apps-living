@@ -35,16 +35,17 @@ export default class StudentTable extends React.Component {
     console.log('请求参数：', params);
     this.setState({loading: true});
 
-    axios.get('http://127.0.0.1:5000/api/student', {
+    axios.get('http://127.0.0.1:5000/api/student/GULSON COURT', {
       // student: 10,
       ...params,
     })
       .then(jsonData => {
+        console.log('AAAAA', this.state);
         const pagination = this.state.pagination;
         // Read total count from server
         // pagination.total = data.totalCount;
         // TODO: change hard code
-        pagination.total = 245;
+        pagination.total = jsonData.data.length;
         console.log(jsonData);
         this.setState({
           loading: false,
