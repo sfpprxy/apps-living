@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table} from 'antd';
+import {Table, Select} from 'antd';
 import axios from 'axios';
 
 
@@ -10,6 +10,8 @@ export default class StudentTable extends React.Component {
       data: [],
       pagination: {},
       loading: false,
+      locale: {emptyText: 'No Data'},
+      houseName: '26%20WARWICK%20ROW',
     };
   }
 
@@ -31,13 +33,11 @@ export default class StudentTable extends React.Component {
   //   });
   // }
 
-  fetch(params = {}) {
+  fetch(params = {houseName: 'DAVENTRY ROAD'}) {
     console.log('请求参数：', params);
-    this.setState({loading: true});
-
-    axios.get('http://127.0.0.1:5000/api/student/GULSON COURT', {
+    axios.get('http://127.0.0.1:5000/api/student/' + params.houseName, {
       // student: 10,
-      ...params,
+      // ...params,
     })
       .then(jsonData => {
         console.log('AAAAA', this.state);
@@ -56,6 +56,12 @@ export default class StudentTable extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
+  }
+
+  handleChange(value) {
+    console.log(`selected ${value}`);
+    console.log('selected', {value});
+    this.fetch({houseName: value});
   }
 
   componentDidMount() {
@@ -98,16 +104,35 @@ export default class StudentTable extends React.Component {
       ),
     }];
 
-    console.log('STATE:', this.state);
+    const Option = Select.Option;
+
+    console.log('THIS.STATE:', this.state);
 
     return (
-      <Table columns={columns}
-             rowKey={record => record.studentId}
-             dataSource={this.state.tableData}
-             pagination={this.state.pagination}
-             loading={this.state.loading}
-             onChange={this.handleTableChange}
-      />
+      <div>
+        <Select showSearch
+                style={{ width: 200 }}
+                placeholder="Select apartment"
+                optionFilterProp="children"
+                notFoundContent="无法找到"
+                onChange={this.handleChange.bind(this)}
+        >
+          <Option value="CASSELDEN HOUSE">CASSELDEN HOUSE</Option>
+          <Option value="lucy">露西</Option>
+          <Option value="tom">汤姆</Option>
+        </Select>
+        <p>
+          {this.value}
+        </p>
+        <Table columns={columns}
+               rowKey={record => record.studentId}
+               dataSource={this.state.tableData}
+               pagination={this.state.pagination}
+               loading={this.state.loading}
+               locale={this.state.locale}
+        />
+      </div>
+
     );
   }
 }
