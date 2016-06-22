@@ -7,11 +7,12 @@ export default class StudentTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      // data: [],
       pagination: {},
       loading: false,
       locale: {emptyText: 'No Data'},
-      houseName: '26%20WARWICK%20ROW',
+      // TODO: get apartments by api
+      apartments: []
     };
   }
 
@@ -32,24 +33,33 @@ export default class StudentTable extends React.Component {
   //     ...filters,
   //   });
   // }
-
-  fetch(params = {houseName: 'DAVENTRY ROAD'}) {
-    console.log('请求参数：', params);
-    axios.get('http://127.0.0.1:5000/api/student/' + params.houseName, {
-      // student: 10,
-      // ...params,
+  fetchApartments() {
+    axios.get('http://127.0.0.1:5000/api/apartments', {
     })
       .then(jsonData => {
-        console.log('AAAAA', this.state);
+        console.log('APART', jsonData);
+        this.setState({
+          apartments: jsonData.data.apartments
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  fetch(params = {houseName: 'PENNY BLACK HOUSE'}) {
+    console.log('请求参数：', params);
+    axios.get('http://127.0.0.1:5000/api/students/' + params.houseName, {
+    })
+      .then(jsonData => {
         const pagination = this.state.pagination;
         // Read total count from server
         // pagination.total = data.totalCount;
-        // TODO: change hard code
-        pagination.total = jsonData.data.length;
+        pagination.total = jsonData.data.students.length;
         console.log(jsonData);
         this.setState({
           loading: false,
-          tableData: jsonData.data.student,
+          tableData: jsonData.data.students,
           pagination,
         });
       })
@@ -66,6 +76,7 @@ export default class StudentTable extends React.Component {
 
   componentDidMount() {
     this.fetch();
+    this.fetchApartments();
   }
 
   render() {
@@ -79,16 +90,6 @@ export default class StudentTable extends React.Component {
     }, {
       title: 'House Name',
       dataIndex: 'houseName',
-      // TODO: change hard code below
-      // filters: [
-      //   { text: '26 WARWICK ROW', value: '26 WARWICK ROW' },
-      //   { text: '27 WARWICK ROW', value: '27 WARWICK ROW' },
-      //   { text: 'CASSELDEN HOUSE', value: 'CASSELDEN HOUSE' },
-      //   { text: 'FORTRESS HOUSE', value: 'FORTRESS HOUSE' },
-      //   { text: 'GULSON COURT', value: 'GULSON COURT' },
-      //   { text: 'PENNY BLACK HOUSE', value: 'PENNY BLACK HOUSE' },
-      //   { text: 'WATERS COURT', value: 'WATERS COURT' },
-      // ],
     }, {
       title: 'Room Number',
       dataIndex: 'roomNumber',
@@ -105,6 +106,12 @@ export default class StudentTable extends React.Component {
     }];
 
     const Option = Select.Option;
+    let apt = this.state.apartments;
+    let children = [];
+    for (let i = 0; i < apt.length; i++) {
+      children.push(<Option key={apt[i].houseName}>
+        {apt[i].houseName}</Option>);
+    }
 
     console.log('THIS.STATE:', this.state);
 
@@ -114,12 +121,9 @@ export default class StudentTable extends React.Component {
                 style={{ width: 200 }}
                 placeholder="Select apartment"
                 optionFilterProp="children"
-                notFoundContent="无法找到"
                 onChange={this.handleChange.bind(this)}
         >
-          <Option value="CASSELDEN HOUSE">CASSELDEN HOUSE</Option>
-          <Option value="lucy">露西</Option>
-          <Option value="tom">汤姆</Option>
+          {children}
         </Select>
         <p>
           {this.value}

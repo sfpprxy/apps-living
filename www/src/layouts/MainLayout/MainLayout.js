@@ -25,6 +25,7 @@ const MainLayout = ({ children }) => {
   );
 };
 
+// TODO: see below
 // Warning: Failed propType: Invalid prop `children` supplied to `MainLayout`, expected a single ReactElement.
 // Check the render method of `App`. (see code below)
 

@@ -19,12 +19,17 @@ def root():
 
 @app.route('/api/sample', methods=['GET'])
 def get_sample():
-    return jsonify({'sampleData': packer.sample_data})
+    return jsonify({'sampleData': packer.log_id})
 
 
-@app.route('/api/student/<house_name>', methods=['GET'])
-def get_student(house_name):
-    return jsonify({'student': packer.get_student_list(house_name)})
+@app.route('/api/students/<house_name>', methods=['GET'])
+def get_students(house_name):
+    return jsonify({'students': packer.get_students(house_name)})
+
+
+@app.route('/api/apartments', methods=['GET'])
+def get_apartments():
+    return jsonify({'apartments': packer.get_apartments()})
 
 
 @app.route('/api/add', methods=['POST'])

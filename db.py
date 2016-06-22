@@ -22,7 +22,3 @@ class Student(db.Model):
         self.room_number = room_number
         self.phone_number = phone_number
         self.email = email
-
-
-
-
