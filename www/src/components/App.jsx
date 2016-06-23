@@ -3,7 +3,7 @@ import { Router, Route, IndexRoute, Link } from 'react-router';
 import styles from './App.less';
 import {Menu, Icon} from 'antd';
 
-export default class pp extends React.Component{
+export default class App extends React.Component{
   render() {
     return (
       <div className={styles.normal}>
