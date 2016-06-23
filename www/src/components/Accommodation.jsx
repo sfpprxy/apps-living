@@ -4,7 +4,7 @@ import {Table, Select} from 'antd';
 import axios from 'axios';
 
 
-export default class StudentTable extends React.Component {
+export default class Accommodation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
