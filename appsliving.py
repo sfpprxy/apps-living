@@ -22,14 +22,14 @@ def get_sample():
     return jsonify({'sampleData': packer.log_id})
 
 
-@app.route('/api/students/<house_name>', methods=['GET'])
+@app.route('/api/tenants/<house_name>', methods=['GET'])
 def get_students(house_name):
-    return jsonify({'students': packer.get_students(house_name)})
+    return jsonify({'tenants': packer.get_tenants(house_name)})
 
 
-@app.route('/api/apartments', methods=['GET'])
-def get_apartments():
-    return jsonify({'apartments': packer.get_apartments()})
+@app.route('/api/houses', methods=['GET'])
+def get_houses():
+    return jsonify({'houses': packer.get_houses()})
 
 
 @app.route('/api/add', methods=['POST'])

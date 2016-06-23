@@ -8,29 +8,29 @@ collect_date = '2016-03-16 08:59:22'
 confirm_state = 'null'
 
 
-def get_students(house_name):
-    result = db.Student.query.filter_by(house_name=house_name).order_by(db.Student.room_number)
-    student_list = []
+def get_tenants(house_name):
+    result = db.House.query.filter_by(house_name=house_name).order_by(db.House.room_number)
+    tenants = []
     for _ in result:
-        student_info = {
-            'studentId': _.student_id,
-            'studentName': _.student_name,
+        tenant = {
+            'roomId': _.room_id,
             'houseName': _.house_name,
             'roomNumber': _.room_number,
+            'tenantName': _.tenant_name,
             'email': _.email
         }
-        student_list.append(student_info)
-    print(student_list)
-    return student_list
+        tenants.append(tenant)
+    print(tenants)
+    return tenants
 
 
-def get_apartments():
-    result = db.Student.query.distinct(db.Student.house_name)
-    apartments = []
+def get_houses():
+    result = db.House.query.distinct(db.House.house_name)
+    houses = []
     for _ in result:
-        apartment = {
+        house = {
             'houseName': _.house_name
         }
-        apartments.append(apartment)
-    print(apartments)
-    return apartments
+        houses.append(house)
+    print(houses)
+    return houses

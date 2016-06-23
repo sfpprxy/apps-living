@@ -1,4 +1,5 @@
 import React from 'react';
+import { Router, Route, IndexRoute, Link } from 'react-router';
 import {Table, Select} from 'antd';
 import axios from 'axios';
 
@@ -9,37 +10,21 @@ export default class StudentTable extends React.Component {
     this.state = {
       // data: [],
       pagination: {},
-      loading: false,
+      loading: true,
       locale: {emptyText: 'No Data'},
-      // TODO: get apartments by api
-      apartments: []
+      houses: []
     };
   }
 
-  // handleTableChange(pagination, filters, sorter) {
-  //   console.log('各类参数是', pagination, filters, sorter);
-  //   console.log('aaaa');
-  //   const pager = this.state.pagination;
-  //   console.log('bbbb');
-  //   pager.current = pagination.current;
-  //   this.setState({
-  //     pagination: pager,
-  //   });
-  //   this.fetch({
-  //     student: pagination.pageSize,
-  //     page: pagination.current,
-  //     sortField: sorter.field,
-  //     sortOrder: sorter.order,
-  //     ...filters,
-  //   });
-  // }
-  fetchApartments() {
-    axios.get('http://127.0.0.1:5000/api/apartments', {
+  // TODO: enable edit
+
+  fetchHouses() {
+    axios.get('http://127.0.0.1:5000/api/houses', {
     })
       .then(jsonData => {
-        console.log('APART', jsonData);
+        console.log('HOUS', jsonData);
         this.setState({
-          apartments: jsonData.data.apartments
+          houses: jsonData.data.houses
         });
       })
       .catch(function (error) {
@@ -49,17 +34,17 @@ export default class StudentTable extends React.Component {
 
   fetch(params = {houseName: 'PENNY BLACK HOUSE'}) {
     console.log('请求参数：', params);
-    axios.get('http://127.0.0.1:5000/api/students/' + params.houseName, {
+    axios.get('http://127.0.0.1:5000/api/tenants/' + params.houseName, {
     })
       .then(jsonData => {
         const pagination = this.state.pagination;
         // Read total count from server
         // pagination.total = data.totalCount;
-        pagination.total = jsonData.data.students.length;
+        pagination.total = jsonData.data.tenants.length;
         console.log(jsonData);
         this.setState({
           loading: false,
-          tableData: jsonData.data.students,
+          tableData: jsonData.data.tenants,
           pagination,
         });
       })
@@ -76,17 +61,14 @@ export default class StudentTable extends React.Component {
 
   componentDidMount() {
     this.fetch();
-    this.fetchApartments();
+    this.fetchHouses();
   }
 
   render() {
 
     const columns = [{
-      title: 'Studnet ID',
-      dataIndex: 'studentId',
-    }, {
-      title: 'Studnet Name',
-      dataIndex: 'studentName',
+      // title: 'Room ID',
+      // dataIndex: 'roomId',
     }, {
       title: 'House Name',
       dataIndex: 'houseName',
@@ -94,23 +76,26 @@ export default class StudentTable extends React.Component {
       title: 'Room Number',
       dataIndex: 'roomNumber',
     }, {
+      title: 'Tenant Name',
+      dataIndex: 'tenantName',
+    }, {
       title: 'Email Address',
       dataIndex: 'email',
     }, {
       title: 'Operation',
       render: (text, record) => (
         <span>
-          <a href="#">Edit</a>
+          <Link to="/actived">Edit Tenant</Link><br />
         </span>
       ),
     }];
 
     const Option = Select.Option;
-    let apt = this.state.apartments;
+    let h = this.state.houses;
     let children = [];
-    for (let i = 0; i < apt.length; i++) {
-      children.push(<Option key={apt[i].houseName}>
-        {apt[i].houseName}</Option>);
+    for (let i = 0; i < h.length; i++) {
+      children.push(<Option key={h[i].houseName}>
+        {h[i].houseName}</Option>);
     }
 
     console.log('THIS.STATE:', this.state);
@@ -119,7 +104,7 @@ export default class StudentTable extends React.Component {
       <div>
         <Select showSearch
                 style={{ width: 200 }}
-                placeholder="Select apartment"
+                placeholder="Select house"
                 optionFilterProp="children"
                 onChange={this.handleChange.bind(this)}
         >
@@ -129,14 +114,14 @@ export default class StudentTable extends React.Component {
           {this.value}
         </p>
         <Table columns={columns}
-               rowKey={record => record.studentId}
+               rowKey={record => record.roomId}
                dataSource={this.state.tableData}
-               pagination={this.state.pagination}
+               pagination={false}
                loading={this.state.loading}
                locale={this.state.locale}
         />
+        <br/><br/><br/>
       </div>
-
     );
   }
 }
