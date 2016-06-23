@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react';
 import { Router, Route, IndexRoute, Link } from 'react-router';
 import App from '../components/App';
+import Accommodation from '../components/Accommodation'
 import NotFound from '../components/NotFound';
 
 const Routes = ({ history }) =>
   <Router history={history}>
-    <Route path="/" component={App} />
-    <Route path="/actived" component={App} />
-    <Route path="/completed" component={App} />
+    <Route path="/" component={App}>
+      <Route path="/accommodation" component={Accommodation} />
+    </Route>
     <Route path="*" component={NotFound}/>
   </Router>;
 

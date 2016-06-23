@@ -1,7 +1,9 @@
 import React from 'react';
 import { Router, Route, IndexRoute, Link } from 'react-router';
-import {Table, Select} from 'antd';
+import {Table, Select, Button} from 'antd';
 import axios from 'axios';
+import styles from './Accommodation.less';
+
 
 
 export default class Accommodation extends React.Component {
@@ -45,7 +47,7 @@ export default class Accommodation extends React.Component {
         this.setState({
           loading: false,
           tableData: jsonData.data.tenants,
-          pagination,
+          pagination
         });
       })
       .catch(function (error) {
@@ -71,23 +73,25 @@ export default class Accommodation extends React.Component {
       // dataIndex: 'roomId',
     }, {
       title: 'House Name',
-      dataIndex: 'houseName',
+      dataIndex: 'houseName'
     }, {
       title: 'Room Number',
-      dataIndex: 'roomNumber',
+      dataIndex: 'roomNumber'
     }, {
       title: 'Tenant Name',
-      dataIndex: 'tenantName',
+      dataIndex: 'tenantName'
     }, {
       title: 'Email Address',
-      dataIndex: 'email',
+      dataIndex: 'email'
     }, {
       title: 'Operation',
       render: (text, record) => (
         <span>
-          <Link to="/actived">Edit Tenant</Link><br />
+          <Link to="/actived">Edit Tenant {record.roomId}</Link>
+          <span className="ant-divider"></span>
+          <Link to="/delete">Delete{record.roomId}</Link>
         </span>
-      ),
+      )
     }];
 
     const Option = Select.Option;
@@ -102,17 +106,18 @@ export default class Accommodation extends React.Component {
 
     return (
       <div>
-        <Select showSearch
-                style={{ width: 200 }}
-                placeholder="Select house"
-                optionFilterProp="children"
-                onChange={this.handleChange.bind(this)}
-        >
-          {children}
-        </Select>
-        <p>
-          {this.value}
-        </p>
+        <div>
+          <Select showSearch
+                  style={{ width: 200}}
+                  placeholder="Select House"
+                  optionFilterProp="children"
+                  onChange={this.handleChange.bind(this)}
+          >
+            {children}
+          </Select>
+          <Button className={styles.newRoom} type="ghost"><Link to="/newroom">New Room</Link></Button>
+          <br/><br/>
+        </div>
         <Table columns={columns}
                rowKey={record => record.roomId}
                dataSource={this.state.tableData}
