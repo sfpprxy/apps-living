@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, Link } from 'react-router';
 import styles from './MainLayout.less';
+import {Menu} from 'antd';
+
 
 const MainLayout = ({ children }) => {
   return (
@@ -14,7 +16,14 @@ const MainLayout = ({ children }) => {
           <Link to="/">All</Link><br />
           <Link to="/actived">Actived</Link><br />
           <Link to="/completed">Completed</Link><br />
+          <Link to="/accommodation">Accommodation</Link><br />
           <Link to="/404">404</Link><br />
+        </div>
+        <div>
+          <Menu>
+            <Menu.Item>菜单项</Menu.Item>
+            <Menu.Item>子菜单项</Menu.Item>
+          </Menu>
         </div>
         <div className={styles.main}>
           {children}
