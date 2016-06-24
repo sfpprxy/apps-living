@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { Router, Route, IndexRoute, Link } from 'react-router';
+import React, {Component, PropTypes} from 'react';
+import {Router, Route, IndexRoute, Link} from 'react-router';
 import styles from './MainLayout.less';
 import {Menu} from 'antd';
 

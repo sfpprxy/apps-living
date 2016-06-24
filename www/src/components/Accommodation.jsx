@@ -1,10 +1,8 @@
 import React from 'react';
-import { Router, Route, IndexRoute, Link } from 'react-router';
+import {Router, Route, IndexRoute, Link} from 'react-router';
 import {Table, Select, Button} from 'antd';
 import axios from 'axios';
 import styles from './Accommodation.less';
-
-
 
 export default class Accommodation extends React.Component {
   constructor(props) {
