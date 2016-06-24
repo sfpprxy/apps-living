@@ -1,8 +1,9 @@
 import React from 'react';
-import {Router, Route, IndexRoute, Link} from 'react-router';
+import {Link} from 'react-router';
 import {Table, Select, Button} from 'antd';
 import axios from 'axios';
 import styles from './Accommodation.less';
+import HouseSelector from './HouseSelector'
 
 export default class Accommodation extends React.Component {
   constructor(props) {
@@ -22,7 +23,6 @@ export default class Accommodation extends React.Component {
     axios.get('http://127.0.0.1:5000/api/houses', {
     })
       .then(jsonData => {
-        console.log('HOUS', jsonData);
         this.setState({
           houses: jsonData.data.houses
         });
@@ -33,7 +33,6 @@ export default class Accommodation extends React.Component {
   }
 
   fetch(params = {houseName: 'PENNY BLACK HOUSE'}) {
-    console.log('请求参数：', params);
     axios.get('http://127.0.0.1:5000/api/tenants/' + params.houseName, {
     })
       .then(jsonData => {
@@ -41,7 +40,6 @@ export default class Accommodation extends React.Component {
         // Read total count from server
         // pagination.total = data.totalCount;
         pagination.total = jsonData.data.tenants.length;
-        console.log(jsonData);
         this.setState({
           loading: false,
           tableData: jsonData.data.tenants,
@@ -53,10 +51,8 @@ export default class Accommodation extends React.Component {
       });
   }
 
-  handleChange(value) {
-    console.log(`selected ${value}`);
-    console.log('selected', {value});
-    this.fetch({houseName: value});
+  getHouseName(houseName) {
+    this.fetch({houseName: houseName});
   }
 
   componentDidMount() {
@@ -86,7 +82,7 @@ export default class Accommodation extends React.Component {
       render: (text, record) => (
         <span>
           <Link to="/actived">Edit Tenant {record.roomId}</Link>
-          <span className="ant-divider"></span>
+          <span className="ant-divider" />
           <Link to="/delete">Delete{record.roomId}</Link>
         </span>
       )
@@ -100,22 +96,13 @@ export default class Accommodation extends React.Component {
         {h[i].houseName}</Option>);
     }
 
-    console.log('THIS.STATE:', this.state);
-
     return (
-      <div className={styles.content}>
-        <div>
-          <Select showSearch
-                  style={{ width: 200}}
-                  placeholder="Select House"
-                  optionFilterProp="children"
-                  onChange={this.handleChange.bind(this)}
-          >
-            {children}
-          </Select>
+      <div >
+        <div className={styles.content}>
+          <HouseSelector getHouseName={this.getHouseName.bind(this)}/>
           <Button className={styles.newRoom} type="ghost"><Link to="/newroom">New Room</Link></Button>
-          <br/><br/>
         </div>
+        <br/>
         <Table columns={columns}
                rowKey={record => record.roomId}
                dataSource={this.state.tableData}
