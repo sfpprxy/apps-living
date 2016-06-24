@@ -11,7 +11,7 @@ export default class App extends React.Component{
           <h1 ><Link className={styles.title} to="/">Apps Living Management</Link></h1>
         </div>
         <div className={styles.content}>
-          <div>
+          <div className={styles.side}>
             <Menu style={{ width: 200 }}>
               <Menu.Item><Link to="/"><Icon type="book" />Parcel</Link></Menu.Item>
               <Menu.Item><Link to="/accommodation"><Icon type="home" />Tenant</Link></Menu.Item>
