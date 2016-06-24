@@ -12,7 +12,7 @@ export default class App extends React.Component{
         </div>
         <div className={styles.content}>
           <div>
-            <Menu style={{ width: 240 }}>
+            <Menu style={{ width: 200 }}>
               <Menu.Item><Link to="/"><Icon type="book" />Parcel</Link></Menu.Item>
               <Menu.Item><Link to="/accommodation"><Icon type="home" />Tenant</Link></Menu.Item>
               <Menu.Item><Link to="/edit"><Icon type="edit" />Edit</Link></Menu.Item>

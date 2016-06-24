@@ -105,7 +105,7 @@ export default class Accommodation extends React.Component {
     console.log('THIS.STATE:', this.state);
 
     return (
-      <div>
+      <div className={styles.content}>
         <div>
           <Select showSearch
                   style={{ width: 200}}
