@@ -1,1 +1,11 @@
 .idea/*
+__pycache__
+www/node_modules
+www/.idea
+www/npm-debug.log
+
+www/README.md
+
+static/*
+
+www/dist/*

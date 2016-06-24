@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.getJSON demo</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div id="box">
+    
+</div>
+<div id="container">
+  <p>text1</p>
+</div>
+<script>
+$.getJSON('http://139.59.172.12:5000/api/sample', function(data) {
+    //data is the JSON string
+    console.log(data);
+    // $('#box').append(JSON.stringify(data));
+    $('#container').append("<p>data</p>");
+});
+</script>
+
+</body>
+</html>
