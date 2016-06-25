@@ -11,13 +11,15 @@ export default class NewRoom extends React.Component {
     this.state = {
       house: '',
       room: '',
-      selectDisabled: false
+      selectDisabled: false,
+      inputDisabled: false
     };
   }
 
   getHouseName(selected) {
     this.setState({
       house: selected,
+      inputDisabled: true
     });
   }
 
@@ -30,7 +32,7 @@ export default class NewRoom extends React.Component {
 
   handleRoomChange (e) {
     this.setState({
-      room: e.target.value,
+      room: e.target.value
     });
   }
 
@@ -64,20 +66,14 @@ export default class NewRoom extends React.Component {
     console.log('NewRoom.state:', this.state);
     console.log('NewRoom.props:', this.props);
 
-    // New Room:
-    // {Select House}  or  Add a new house: {houseName}
-    // add new house: {roomNumber}
-    // {Submit} =>’Add Success! You can keep adding by submitting new form ’    {Back to main page}
-    //
-    // 提交后不返回而是弹出全局提示.
-
     return (
       <div>
         <div>
           <HouseSelector disabled={this.state.selectDisabled} getHouseName={this.getHouseName.bind(this)}/>
           <br/>
           <Input placeholder="Or Add a New House" value={this.state.house}
-                 onChange={this.handleHouseChange.bind(this)} style={{ width: 200}}/>
+                 onChange={this.handleHouseChange.bind(this)} disabled={this.state.inputDisabled}
+                 style={{ width: 200}}/>
         </div><br/>
         <div>
           <Input placeholder="Input a New Room Number" value={this.state.room}
