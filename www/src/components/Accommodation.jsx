@@ -19,20 +19,7 @@ export default class Accommodation extends React.Component {
 
   // TODO: enable edit
 
-  fetchHouses() {
-    axios.get('http://127.0.0.1:5000/api/houses', {
-    })
-      .then(jsonData => {
-        this.setState({
-          houses: jsonData.data.houses
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-  fetch(params = {houseName: 'PENNY BLACK HOUSE'}) {
+  fetchTableData(params = {houseName: 'PENNY BLACK HOUSE'}) {
     axios.get('http://127.0.0.1:5000/api/tenants/' + params.houseName, {
     })
       .then(jsonData => {
@@ -51,8 +38,8 @@ export default class Accommodation extends React.Component {
       });
   }
 
-  getHouseName(houseName) {
-    this.fetch({houseName: houseName});
+  getHouseName(selected) {
+    this.fetchTableData({houseName: selected});
   }
 
   handleEdit(roomId) {
@@ -61,7 +48,7 @@ export default class Accommodation extends React.Component {
   }
 
   componentDidMount() {
-    this.fetch();
+    this.fetchTableData();
   }
 
   render() {
