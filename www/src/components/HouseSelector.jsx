@@ -7,7 +7,8 @@ export default class HouseSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      houses: []
+      houses: [],
+      selected: 'Select House',
     };
   }
 
@@ -25,7 +26,17 @@ export default class HouseSelector extends React.Component {
   }
 
   handleChange(selected) {
+    // console.log('HouseSelector Touched!!!');
     this.props.getHouseName(selected);
+    this.setState({
+      selected: selected
+    });
+  }
+
+  reset() {
+    if (this.props.disabled === true) {
+      this.state.selected = 'Select House Disabled';
+    }
   }
 
   componentDidMount() {
@@ -41,6 +52,8 @@ export default class HouseSelector extends React.Component {
         {h[i].houseName}</Option>);
     }
 
+    this.reset();
+
     console.log('HouseSelector.state:', this.state);
     console.log('HouseSelector.props:', this.props);
 
@@ -51,6 +64,8 @@ export default class HouseSelector extends React.Component {
                 placeholder="Select House"
                 optionFilterProp="children"
                 onChange={this.handleChange.bind(this)}
+                value={this.state.selected}
+                disabled={this.props.disabled}
         >
           {children}
         </Select>
