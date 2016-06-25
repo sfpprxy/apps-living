@@ -55,6 +55,11 @@ export default class Accommodation extends React.Component {
     this.fetch({houseName: houseName});
   }
 
+  handleEdit(roomId) {
+    console.log(roomId);
+    this.props.getRoomId(roomId);
+  }
+
   componentDidMount() {
     this.fetch();
   }
@@ -80,9 +85,7 @@ export default class Accommodation extends React.Component {
       title: 'Operation',
       render: (text, record) => (
         <span>
-          <Link to="/actived">Edit Tenant {record.roomId}</Link>
-          <span className="ant-divider" />
-          <Link to="/delete">Delete{record.roomId}</Link>
+          <Link to="/delete-room">Delete{record.roomId}</Link>
         </span>
       )
     }];
@@ -91,7 +94,8 @@ export default class Accommodation extends React.Component {
       <div >
         <div className={styles.content}>
           <HouseSelector getHouseName={this.getHouseName.bind(this)}/>
-          <Button className={styles.newRoom} type="ghost"><Link to="/newroom">New Room</Link></Button>
+          <Button className={styles.button} type="ghost"><Link to="/new-room">New Room</Link></Button>
+          <Button className={styles.button} type="ghost"><Link to="/edit-room">Edit Room</Link></Button>
         </div>
         <br/>
         <Table columns={columns}
