@@ -57,7 +57,6 @@ export default class Accommodation extends React.Component {
 
   componentDidMount() {
     this.fetch();
-    this.fetchHouses();
   }
 
   render() {

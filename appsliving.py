@@ -32,13 +32,11 @@ def get_houses():
     return jsonify({'houses': packer.get_houses()})
 
 
-@app.route('/api/add', methods=['POST'])
+@app.route('/api/new-room', methods=['POST'])
 def post_add():
-    print('WOW!')
     if request.json:
-        mydata = request.json # will be
-        print('OK')
-        print(mydata)
+        data = request.json # will be
+        print(data)
         return 'OK to front'
 
     else:

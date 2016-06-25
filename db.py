@@ -23,5 +23,5 @@ class House(db.Model):
         self.tenant_name = tenant_name
         self.phone_number = phone_number
         self.email = email
-        
+
 # TODO: 解决数据库主键不同步问题 — sequence失效无法添加新row
