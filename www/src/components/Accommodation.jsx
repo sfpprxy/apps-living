@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {Table, Select, Button} from 'antd';
+import {Table, Button} from 'antd';
 import axios from 'axios';
 import styles from './Accommodation.less';
 import HouseSelector from './HouseSelector'
@@ -87,14 +87,6 @@ export default class Accommodation extends React.Component {
         </span>
       )
     }];
-
-    const Option = Select.Option;
-    let h = this.state.houses;
-    let children = [];
-    for (let i = 0; i < h.length; i++) {
-      children.push(<Option key={h[i].houseName}>
-        {h[i].houseName}</Option>);
-    }
 
     return (
       <div >
