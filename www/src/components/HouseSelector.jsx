@@ -1,7 +1,6 @@
 import React from 'react';
 import {Select} from 'antd';
 import axios from 'axios';
-import styles from './HouseSelector.less';
 
 export default class HouseSelector extends React.Component {
   constructor(props) {
