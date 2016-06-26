@@ -32,6 +32,11 @@ def get_houses():
     return jsonify({'houses': packer.get_houses()})
 
 
+@app.route('/api/rooms/<house_name>', methods=['GET'])
+def get_rooms(house_name):
+    return jsonify({'rooms': packer.get_rooms(house_name)})
+
+
 @app.route('/api/new-room', methods=['POST'])
 def post_add():
     if request.json:
