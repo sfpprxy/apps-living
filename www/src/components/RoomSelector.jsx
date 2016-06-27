@@ -26,7 +26,7 @@ export default class RoomSelector extends React.Component {
 
   handleChange(selected) {
     // console.log('RoomSelector Touched!!!');
-    this.props.getRoom(selected);
+    this.props.getRoomNumber(selected);
     let r = this.state.rooms;
     for (let i = 0; i < r.length; i++) {
       if (r[i].roomNumber === selected) {
