@@ -57,6 +57,7 @@ def post_add():
 
 
 # TODO: implement update-tenant post, http://127.0.0.1:5000/api/update-tenant
+# TODO: implement delete-room post, http://127.0.0.1:5000/api/delete-room
 
 
 if __name__ == '__main__':

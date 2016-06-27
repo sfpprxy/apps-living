@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {Table, Button} from 'antd';
+import {Button, message, Popconfirm, Table} from 'antd';
 import axios from 'axios';
 import styles from './Accommodation.less';
 import HouseSelector from './HouseSelector'
@@ -42,9 +42,23 @@ export default class Accommodation extends React.Component {
     this.fetchTableData({houseName: selected});
   }
 
-  handleEdit(roomId) {
-    console.log(roomId);
-    this.props.getRoomId(roomId);
+  // handleEdit(roomId) {
+  //   console.log(roomId);
+  //   this.props.getRoomId(roomId);
+  // }
+
+  delete(roomId) {
+    axios.post('http://127.0.0.1:5000/api/delete-room', {
+      roomId: roomId
+    })
+      .then(function (response) {
+        // console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    message.success('Delete Success '
+    );
   }
 
   componentDidMount() {
@@ -72,7 +86,10 @@ export default class Accommodation extends React.Component {
       title: 'Operation',
       render: (text, record) => (
         <span>
-          <Link to="/delete-room">Delete{record.roomId}</Link>
+          <Popconfirm title="Are you sure you want to delete this room?" okText="Confirm" cancelText="Cancel"
+                      onConfirm={this.delete.bind(this, record.roomId)}>
+            <a href="#">Delete</a>
+          </Popconfirm>
         </span>
       )
     }];
