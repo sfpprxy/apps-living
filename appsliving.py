@@ -7,6 +7,7 @@ app = Flask(__name__, static_url_path='')
 CORS(app)
 
 
+# TODO: log all these gets and posts
 @app.route('/hello')
 def hello_world():
     return 'Hello World!'
@@ -37,6 +38,12 @@ def get_rooms(house_name):
     return jsonify({'rooms': packer.get_rooms(house_name)})
 
 
+@app.route('/api/room/<room_id>', methods=['GET'])
+def get_room(room_id):
+    return jsonify({'room': packer.get_room(room_id)})
+
+
+# TODO: implement this post
 @app.route('/api/new-room', methods=['POST'])
 def post_add():
     if request.json:
@@ -47,6 +54,9 @@ def post_add():
     else:
         print('no json received')
         return 'no json received'
+
+
+# TODO: implement update-tenant post, http://127.0.0.1:5000/api/update-tenant
 
 
 if __name__ == '__main__':

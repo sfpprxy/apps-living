@@ -47,3 +47,19 @@ def get_rooms(house_name):
         rooms.append(room)
     print(rooms)
     return rooms
+
+
+def get_room(room_id):
+    result = db.House.query.filter_by(room_id=room_id)
+    one_room = []
+    for _ in result:
+        room = {
+            'roomId': _.room_id,
+            'houseName': _.house_name,
+            'roomNumber': _.room_number,
+            'tenantName': _.tenant_name,
+            'email': _.email
+        }
+        one_room.append(room)
+    print(one_room)
+    return one_room
