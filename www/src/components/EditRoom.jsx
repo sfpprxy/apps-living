@@ -32,7 +32,6 @@ export default class EditRoom extends React.Component {
   }
 
   getRoomId (roomId) {
-    // TODO: fetch tenant and email with roomId, use roomId to submit
     console.log(roomId, '!!!!!!!')
     this.setState({
       roomId: roomId
