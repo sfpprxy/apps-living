@@ -20,7 +20,7 @@ export default class Accommodation extends React.Component {
   // TODO: enable edit
 
   fetchTableData(params = {houseName: 'PENNY BLACK HOUSE'}) {
-    axios.get('http://127.0.0.1:5002/api/tenants/' + params.houseName, {
+    axios.get('http://139.59.172.12:5002/api/tenants/' + params.houseName, {
     })
       .then(jsonData => {
         const pagination = this.state.pagination;
