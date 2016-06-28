@@ -72,13 +72,12 @@ def new_room(data):
 def update_tenant(data):
     room_id = data['roomId']
     tenant_name = data['tenantName']
-    email =data['email']
+    email = data['email']
     db.House.query.filter_by(room_id=room_id).update(dict(tenant_name=tenant_name, email=email))
     db.db.session.commit()
 
 
 def delete_room(data):
-    print(data)
     room_id = data['roomId']
     db.House.query.filter_by(room_id=room_id).delete()
     db.db.session.commit()
