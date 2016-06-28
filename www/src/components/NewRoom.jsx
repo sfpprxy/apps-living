@@ -10,7 +10,7 @@ export default class NewRoom extends React.Component {
     super(props);
     this.state = {
       house: '',
-      room: '',
+      roomNumber: '',
       selectDisabled: false,
       inputDisabled: false
     };
@@ -32,14 +32,14 @@ export default class NewRoom extends React.Component {
 
   handleRoomChange (e) {
     this.setState({
-      room: e.target.value
+      roomNumber: e.target.value
     });
   }
 
   submit () {
     axios.post('http://127.0.0.1:5000/api/new-room', {
       house: this.state.house,
-      room: this.state.room
+      roomNumber: this.state.roomNumber
     })
       .then(function (response) {
         // console.log(response);
@@ -49,7 +49,7 @@ export default class NewRoom extends React.Component {
       });
     message.success('Add Success: '
       + this.state.house + ' '
-      + this.state.room
+      + this.state.roomNumber
     );
   }
 
@@ -76,7 +76,7 @@ export default class NewRoom extends React.Component {
                  style={{ width: 200}}/>
         </div><br/>
         <div>
-          <Input placeholder="Input a New Room Number" value={this.state.room}
+          <Input placeholder="Input a New Room Number" value={this.state.roomNumber}
                  onChange={this.handleRoomChange.bind(this)} style={{ width: 200}}/>
         </div><br/>
         <div>
