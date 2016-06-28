@@ -15,8 +15,6 @@ export default class App extends React.Component{
             <Menu style={{ width: 200 }}>
               <Menu.Item><Link to="/"><Icon type="book" />Parcel</Link></Menu.Item>
               <Menu.Item><Link to="/accommodation"><Icon type="home" />House</Link></Menu.Item>
-              <Menu.Item><Link to="/edit"><Icon type="edit" />Edit</Link></Menu.Item>
-              <Menu.Item><Link to="/feedback"><Icon type="message" />Feedback</Link></Menu.Item>
             </Menu>
           </div>
           <div className={styles.main}>

@@ -15,7 +15,7 @@ const Routes = ({ history }) =>
       <Route path="/edit-room" component={EditRoom} />
     </Route>
     <Route path="/HouseSelector" component={HouseSelector} />
-    <Route path="*" component={NotFound}/>
+    <Route path="*" component={App}/>
   </Router>;
 
 Routes.propTypes = {
