@@ -37,7 +37,7 @@ export default class NewRoom extends React.Component {
   }
 
   submit () {
-    axios.post('http://127.0.0.1:5000/api/new-room', {
+    axios.post('http://127.0.0.1:5002/api/new-room', {
       house: this.state.house,
       roomNumber: this.state.roomNumber
     })

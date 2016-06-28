@@ -12,7 +12,7 @@ export default class RoomSelector extends React.Component {
   }
 
   fetchRooms(house) {
-    axios.get('http://127.0.0.1:5000/api/rooms/' + house, {
+    axios.get('http://127.0.0.1:5002/api/rooms/' + house, {
     })
       .then(jsonData => {
         this.setState({
