@@ -21,7 +21,7 @@ export default class Accommodation extends React.Component {
   // TODO: enable edit
 
   fetchTableData(params = {houseName: 'PENNY BLACK HOUSE'}) {
-    axios.get(Helper.getURL() + 'http://127.0.0.1:5002/api/tenants/' + params.houseName, {
+    axios.get(Helper.getURL() + '/api/tenants/' + params.houseName, {
     })
       .then(jsonData => {
         const pagination = this.state.pagination;
@@ -52,7 +52,7 @@ export default class Accommodation extends React.Component {
   // }
 
   delete(roomId) {
-    axios.post(Helper.getURL() + 'http://127.0.0.1:5002/api/delete-room', {
+    axios.post(Helper.getURL() + '/api/delete-room', {
       roomId: roomId
     })
       .then(function (response) {

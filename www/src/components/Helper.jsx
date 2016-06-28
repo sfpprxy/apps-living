@@ -15,7 +15,7 @@ export default class Helper extends React.Component {
   }
 
   static getRoom(roomId) {
-    axios.get(Helper.getURL() + this.getURL() + '/api/room/' + roomId, {
+    axios.get(Helper.getURL() + '/api/room/' + roomId, {
     })
       .then(jsonData => {
         alert(jsonData.data.room.email);

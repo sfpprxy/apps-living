@@ -13,7 +13,7 @@ export default class HouseSelector extends React.Component {
   }
 
   fetchHouses() {
-    axios.get(Helper.getURL() + 'http://127.0.0.1:5002/api/houses', {
+    axios.get(Helper.getURL() + '/api/houses', {
     })
       .then(jsonData => {
         this.setState({
