@@ -67,3 +67,11 @@ def new_room(data):
     record = db.House(room_id=None, house_name=house, room_number=room_number, tenant_name=None, phone_number=None, email=None)
     db.db.session.add(record)
     db.db.session.commit()
+
+
+def update_tenant(data):
+    room_id = data['roomId']
+    tenant_name = data['tenantName']
+    email =data['email']
+    db.House.query.filter_by(room_id=room_id).update(dict(tenant_name=tenant_name, email=email))
+    db.db.session.commit()

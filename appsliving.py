@@ -54,7 +54,17 @@ def new_room():
         return 'no json received'
 
 
-# TODO: implement update-tenant post, http://127.0.0.1:5000/api/update-tenant
+@app.route('/api/update-tenant', methods=['POST'])
+def update_tenant():
+    if request.json:
+        service.update_tenant(request.json)
+        return 'update-tenant OK!'
+
+    else:
+        print('no json received')
+        return 'no json received'
+
+
 # TODO: implement delete-room post, http://127.0.0.1:5000/api/delete-room
 
 
