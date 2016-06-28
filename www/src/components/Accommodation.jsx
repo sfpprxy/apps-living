@@ -1,10 +1,9 @@
 import React from 'react';
-import { Router, Route, IndexRoute, Link } from 'react-router';
-import {Table, Select, Button} from 'antd';
+import {Link} from 'react-router';
+import {Button, message, Popconfirm, Table} from 'antd';
 import axios from 'axios';
 import styles from './Accommodation.less';
-
-
+import HouseSelector from './HouseSelector'
 
 export default class Accommodation extends React.Component {
   constructor(props) {
@@ -20,22 +19,7 @@ export default class Accommodation extends React.Component {
 
   // TODO: enable edit
 
-  fetchHouses() {
-    axios.get('http://127.0.0.1:5000/api/houses', {
-    })
-      .then(jsonData => {
-        console.log('HOUS', jsonData);
-        this.setState({
-          houses: jsonData.data.houses
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-  fetch(params = {houseName: 'PENNY BLACK HOUSE'}) {
-    console.log('请求参数：', params);
+  fetchTableData(params = {houseName: 'PENNY BLACK HOUSE'}) {
     axios.get('http://127.0.0.1:5000/api/tenants/' + params.houseName, {
     })
       .then(jsonData => {
@@ -43,7 +27,6 @@ export default class Accommodation extends React.Component {
         // Read total count from server
         // pagination.total = data.totalCount;
         pagination.total = jsonData.data.tenants.length;
-        console.log(jsonData);
         this.setState({
           loading: false,
           tableData: jsonData.data.tenants,
@@ -55,15 +38,35 @@ export default class Accommodation extends React.Component {
       });
   }
 
-  handleChange(value) {
-    console.log(`selected ${value}`);
-    console.log('selected', {value});
-    this.fetch({houseName: value});
+  getHouseName(selected) {
+    this.setState({
+      houseName: selected
+    })
+    this.fetchTableData({houseName: selected});
+  }
+
+  // handleEdit(roomId) {
+  //   console.log(roomId);
+  //   this.props.getRoomId(roomId);
+  // }
+
+  delete(roomId) {
+    axios.post('http://127.0.0.1:5000/api/delete-room', {
+      roomId: roomId
+    })
+      .then(function (response) {
+        // console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    message.success('Delete Success '
+    );
+    setTimeout(() => this.fetchTableData({houseName: this.state.houseName}), 1000);
   }
 
   componentDidMount() {
-    this.fetch();
-    this.fetchHouses();
+    this.fetchTableData();
   }
 
   render() {
@@ -87,37 +90,22 @@ export default class Accommodation extends React.Component {
       title: 'Operation',
       render: (text, record) => (
         <span>
-          <Link to="/actived">Edit Tenant {record.roomId}</Link>
-          <span className="ant-divider"></span>
-          <Link to="/delete">Delete{record.roomId}</Link>
+          <Popconfirm title="Are you sure you want to delete this room?" okText="Confirm" cancelText="Cancel"
+                      onConfirm={this.delete.bind(this, record.roomId)}>
+            <a href="#">Delete</a>
+          </Popconfirm>
         </span>
       )
     }];
 
-    const Option = Select.Option;
-    let h = this.state.houses;
-    let children = [];
-    for (let i = 0; i < h.length; i++) {
-      children.push(<Option key={h[i].houseName}>
-        {h[i].houseName}</Option>);
-    }
-
-    console.log('THIS.STATE:', this.state);
-
     return (
-      <div className={styles.content}>
-        <div>
-          <Select showSearch
-                  style={{ width: 200}}
-                  placeholder="Select House"
-                  optionFilterProp="children"
-                  onChange={this.handleChange.bind(this)}
-          >
-            {children}
-          </Select>
-          <Button className={styles.newRoom} type="ghost"><Link to="/newroom">New Room</Link></Button>
-          <br/><br/>
+      <div >
+        <div className={styles.content}>
+          <HouseSelector getHouseName={this.getHouseName.bind(this)}/>
+          <Button className={styles.button} type="ghost"><Link to="/new-room">New Room</Link></Button>
+          <Button className={styles.button} type="ghost"><Link to="/edit-room">Edit Room</Link></Button>
         </div>
+        <br/>
         <Table columns={columns}
                rowKey={record => record.roomId}
                dataSource={this.state.tableData}
