@@ -4,6 +4,7 @@ import {Button, Input, message} from 'antd';
 import axios from 'axios';
 import styles from './NewRoom.less';
 import HouseSelector from './HouseSelector'
+import Helper from "./Helper";
 
 export default class NewRoom extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ export default class NewRoom extends React.Component {
   }
 
   submit () {
-    axios.post('http://127.0.0.1:5002/api/new-room', {
+    axios.post(Helper.getURL() + '/api/new-room', {
       house: this.state.house,
       roomNumber: this.state.roomNumber
     })

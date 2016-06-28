@@ -15,7 +15,7 @@ export default class Helper extends React.Component {
   }
 
   static getRoom(roomId) {
-    axios.get('http://127.0.0.1:5002/api/room/' + roomId, {
+    axios.get(Helper.getURL() + '/api/room/' + roomId, {
     })
       .then(jsonData => {
         alert(jsonData.data.room.email);
@@ -24,6 +24,10 @@ export default class Helper extends React.Component {
         console.log(error);
       });
     return true;
+  }
+
+  static getURL() {
+    return 'http://139.59.172.12:5002'
   }
 
   render() {

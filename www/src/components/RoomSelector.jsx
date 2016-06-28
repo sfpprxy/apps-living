@@ -1,6 +1,7 @@
 import React from 'react';
 import {Select} from 'antd';
 import axios from 'axios';
+import Helper from "./Helper";
 
 export default class RoomSelector extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class RoomSelector extends React.Component {
   }
 
   fetchRooms(house) {
-    axios.get('http://127.0.0.1:5002/api/rooms/' + house, {
+    axios.get(Helper.getURL() + '/api/rooms/' + house, {
     })
       .then(jsonData => {
         this.setState({
