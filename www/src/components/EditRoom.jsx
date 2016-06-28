@@ -36,7 +36,7 @@ export default class EditRoom extends React.Component {
     this.setState({
       roomId: roomId
     })
-    axios.get('http://127.0.0.1:5002/api/room/' + roomId, {
+    axios.get(Helper.getURL() + 'http://127.0.0.1:5002/api/room/' + roomId, {
     })
       .then(jsonData => {
         console.log('YYYYYYYYY', jsonData.data.room[0]);
@@ -64,7 +64,7 @@ export default class EditRoom extends React.Component {
   }
 
   submit () {
-    axios.post('http://127.0.0.1:5002/api/update-tenant', {
+    axios.post(Helper.getURL() + 'http://127.0.0.1:5002/api/update-tenant', {
       tenantName: this.state.name,
       email: this.state.email,
       roomId: this.state.roomId
