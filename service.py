@@ -20,7 +20,6 @@ def get_tenants(house_name):
             'email': _.email
         }
         tenants.append(tenant)
-    print(tenants)
     return tenants
 
 
@@ -32,7 +31,6 @@ def get_houses():
             'houseName': _.house_name
         }
         houses.append(house)
-    print(houses)
     return houses
 
 
@@ -45,7 +43,6 @@ def get_rooms(house_name):
             'roomNumber': _.room_number
         }
         rooms.append(room)
-    print(rooms)
     return rooms
 
 
@@ -61,5 +58,12 @@ def get_room(room_id):
             'email': _.email
         }
         one_room.append(room)
-    print(one_room)
     return one_room
+
+
+def new_room(data):
+    house = data['house']
+    room_number = data['roomNumber']
+    record = db.House(dict(room_id=None, house_name=house, room_number=room_number))
+    db.db.session.add(record)
+    db.db.session.commit()

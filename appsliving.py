@@ -43,12 +43,10 @@ def get_room(room_id):
     return jsonify({'room': service.get_room(room_id)})
 
 
-# TODO: implement this post
 @app.route('/api/new-room', methods=['POST'])
-def post_add():
+def new_room():
     if request.json:
-        data = request.json
-        print(data)
+        service.new_room(request.json)
         return 'new-room OK!'
 
     else:
