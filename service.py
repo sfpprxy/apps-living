@@ -64,6 +64,6 @@ def get_room(room_id):
 def new_room(data):
     house = data['house']
     room_number = data['roomNumber']
-    record = db.House(dict(room_id=None, house_name=house, room_number=room_number))
+    record = db.House(room_id=None, house_name=house, room_number=room_number, tenant_name=None, phone_number=None, email=None)
     db.db.session.add(record)
     db.db.session.commit()
