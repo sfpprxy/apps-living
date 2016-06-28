@@ -18,8 +18,6 @@ export default class Accommodation extends React.Component {
     };
   }
 
-  // TODO: enable edit
-
   fetchTableData(params = {houseName: 'PENNY BLACK HOUSE'}) {
     axios.get(Helper.getURL() + '/api/tenants/' + params.houseName, {
     })
