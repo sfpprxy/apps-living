@@ -39,6 +39,9 @@ export default class Accommodation extends React.Component {
   }
 
   getHouseName(selected) {
+    this.setState({
+      houseName: selected
+    })
     this.fetchTableData({houseName: selected});
   }
 
@@ -59,6 +62,7 @@ export default class Accommodation extends React.Component {
       });
     message.success('Delete Success '
     );
+    setTimeout(() => this.fetchTableData({houseName: this.state.houseName}), 1000);
   }
 
   componentDidMount() {
