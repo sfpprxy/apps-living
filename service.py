@@ -1,13 +1,6 @@
 import db
 
 
-# logbook
-log_id = 6097248
-arrive_date = '2016-03-14 21:35:59'
-collect_date = '2016-03-16 08:59:22'
-confirm_state = 'null'
-
-
 def get_tenants(house_name):
     result = db.House.query.filter_by(house_name=house_name).order_by(db.House.room_number)
     tenants = []
@@ -64,20 +57,28 @@ def get_room(room_id):
 def new_room(data):
     house = data['house']
     room_number = data['roomNumber']
-    record = db.House(room_id=None, house_name=house, room_number=room_number, tenant_name=None, phone_number=None, email=None)
+    record = db.House(room_id=None, house_name=house, room_number=room_number, tenant_name=None, phone_number=None,
+                      email=None)
     db.db.session.add(record)
     db.db.session.commit()
+    return house + ' ' + room_number
 
 
 def update_tenant(data):
     room_id = data['roomId']
     tenant_name = data['tenantName']
     email = data['email']
-    db.House.query.filter_by(room_id=room_id).update(dict(tenant_name=tenant_name, email=email))
+    room = db.House.query.filter_by(room_id=room_id)
+    old_tenant_name = room.first().tenant_name
+    old_email = room.first().email
+    room.update(dict(tenant_name=tenant_name, email=email))
     db.db.session.commit()
+    return 'old: ' + old_tenant_name + ' ' + old_email + ' ' + \
+           'new: ' + tenant_name + ' ' + email + ' '
 
 
 def delete_room(data):
     room_id = data['roomId']
     db.House.query.filter_by(room_id=room_id).delete()
     db.db.session.commit()
+    return str(room_id)
