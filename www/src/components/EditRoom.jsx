@@ -32,14 +32,12 @@ export default class EditRoom extends React.Component {
   }
 
   getRoomId (roomId) {
-    console.log(roomId, '!!!!!!!')
     this.setState({
       roomId: roomId
     })
     axios.get(Helper.getURL() + '/api/room/' + roomId, {
     })
       .then(jsonData => {
-        console.log('YYYYYYYYY', jsonData.data.room[0]);
         this.setState({
           name: jsonData.data.room[0].tenantName,
           email: jsonData.data.room[0].email
