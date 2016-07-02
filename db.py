@@ -8,7 +8,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-class House(db.Model):
+class Room(db.Model):
     room_id = db.Column(db.Integer, primary_key=True)
     house_name = db.Column(db.Text)
     room_number = db.Column(db.Text)
