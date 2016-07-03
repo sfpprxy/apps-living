@@ -38,20 +38,24 @@ export default class NewRoom extends React.Component {
   }
 
   submit () {
-    axios.post(Helper.getURL() + '/api/new-room', {
-      house: this.state.house,
-      roomNumber: this.state.roomNumber
-    })
-      .then(function (response) {
-        // console.log(response);
+    if (this.state.house === '') {
+      message.error('Please input House Name');
+    } else {
+      axios.post(Helper.getURL() + '/api/new-room', {
+        house: this.state.house,
+        roomNumber: this.state.roomNumber
       })
-      .catch(function (error) {
-        console.log(error);
-      });
-    message.success('Add Success: '
-      + this.state.house + ' '
-      + this.state.roomNumber
-    );
+        .then(function (response) {
+          // console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      message.success('Add Success: '
+        + this.state.house + ' '
+        + this.state.roomNumber
+      );
+    }
   }
 
   leave () {
