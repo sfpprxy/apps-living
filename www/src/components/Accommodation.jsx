@@ -10,7 +10,6 @@ export default class Accommodation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // data: [],
       pagination: {},
       loading: true,
       locale: {emptyText: 'No Data'},
@@ -43,11 +42,6 @@ export default class Accommodation extends React.Component {
     })
     this.fetchTableData({houseName: selected});
   }
-
-  // handleEdit(roomId) {
-  //   console.log(roomId);
-  //   this.props.getRoomId(roomId);
-  // }
 
   delete(roomId) {
     axios.post(Helper.getURL() + '/api/delete-room', {
