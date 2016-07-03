@@ -61,6 +61,7 @@ def new_room(data):
                      email='')
     db.db.session.add(record)
     db.db.session.commit()
+    # potential type error if do not trust user
     return house + ' ' + room_number
 
 
@@ -73,6 +74,7 @@ def update_tenant(data):
     old_email = room.first().email
     room.update(dict(tenant_name=tenant_name, email=email))
     db.db.session.commit()
+    # potential type error if do not trust user
     return 'old: ' + old_tenant_name + ' ' + old_email + ' ' + \
            'new: ' + tenant_name + ' ' + email + ' '
 
@@ -82,3 +84,43 @@ def delete_room(data):
     db.Room.query.filter_by(room_id=room_id).delete()
     db.db.session.commit()
     return str(room_id)
+
+
+def get_log(state):
+    result = db.Logbook.query.filter_by(state=state)
+    logs = []
+    for _ in result:
+        log = {
+            'logId': _.log_id,
+            'arriveDate': _.arrive_date,
+            'collectDate': _.collect_date,
+            'roomId': _.room_id,
+            'houseName': _.house_name,
+            'roomNumber': _.room_number,
+            'tenantName': _.tenant_name,
+            'email': _.email,
+            'code': _.code,
+            'state': _.state
+        }
+        logs.append(log)
+    return logs
+
+
+def check_log(room_id):
+    result = db.Logbook.query.filter_by(room_id=room_id, state=None)
+    logs = []
+    for _ in result:
+        log = {
+            'logId': _.log_id,
+            'arriveDate': _.arrive_date,
+            'collectDate': _.collect_date,
+            'roomId': _.room_id,
+            'houseName': _.house_name,
+            'roomNumber': _.room_number,
+            'tenantName': _.tenant_name,
+            'email': _.email,
+            'code': _.code,
+            'state': _.state
+        }
+        logs.append(log)
+    return logs

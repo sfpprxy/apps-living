@@ -77,5 +77,17 @@ def delete_room():
         return 'no json received'
 
 
+@app.route('/api/log/<state>', methods=['GET'])
+def get_log(state):
+    log.info('/api/log/' + state)
+    return jsonify({'logs': service.get_log(state)})
+
+
+@app.route('/api/check-log/<room_id>', methods=['GET'])
+def check_log(room_id):
+    log.info('/api/rooms/' + room_id)
+    return jsonify({'logs': service.check_log(room_id)})
+
+
 if __name__ == '__main__':
     app.run(debug=True)
