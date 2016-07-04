@@ -11,8 +11,7 @@ export default class House extends React.Component {
     super(props);
     this.state = {
       loading: true,
-      locale: {emptyText: 'No Data'},
-      houses: []
+      locale: {emptyText: 'No Data'}
     };
   }
 
