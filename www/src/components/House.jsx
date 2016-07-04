@@ -10,7 +10,6 @@ export default class House extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pagination: {},
       loading: true,
       locale: {emptyText: 'No Data'},
       houses: []
@@ -21,14 +20,9 @@ export default class House extends React.Component {
     axios.get(Helper.getURL() + '/api/tenants/' + params.houseName, {
     })
       .then(jsonData => {
-        const pagination = this.state.pagination;
-        // Read total count from server
-        // pagination.total = data.totalCount;
-        pagination.total = jsonData.data.tenants.length;
         this.setState({
           loading: false,
-          tableData: jsonData.data.tenants,
-          pagination
+          tableData: jsonData.data.tenants
         });
       })
       .catch(function (error) {
@@ -85,7 +79,7 @@ export default class House extends React.Component {
         <span>
           <Popconfirm title="Are you sure you want to delete this room?" okText="Confirm" cancelText="Cancel"
                       onConfirm={this.delete.bind(this, record.roomId)}>
-            <a href="#">Delete{record.email}</a>
+            <a href="#">Delete</a>
           </Popconfirm>
         </span>
       )
