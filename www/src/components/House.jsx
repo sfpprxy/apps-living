@@ -2,11 +2,11 @@ import React from 'react';
 import {Link} from 'react-router';
 import {Button, message, Popconfirm, Table} from 'antd';
 import axios from 'axios';
-import styles from './Accommodation.less';
+import styles from './House.less';
 import HouseSelector from './HouseSelector'
 import Helper from "./Helper";
 
-export default class Accommodation extends React.Component {
+export default class House extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -85,7 +85,7 @@ export default class Accommodation extends React.Component {
         <span>
           <Popconfirm title="Are you sure you want to delete this room?" okText="Confirm" cancelText="Cancel"
                       onConfirm={this.delete.bind(this, record.roomId)}>
-            <a href="#">Delete</a>
+            <a href="#">Delete{record.email}</a>
           </Popconfirm>
         </span>
       )

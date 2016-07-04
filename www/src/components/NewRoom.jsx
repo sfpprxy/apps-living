@@ -59,7 +59,7 @@ export default class NewRoom extends React.Component {
   }
 
   leave () {
-    return '/accommodation';
+    return '/house';
   }
 
   componentDidMount() {

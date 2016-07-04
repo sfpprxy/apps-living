@@ -82,7 +82,7 @@ export default class EditRoom extends React.Component {
   }
 
   leave () {
-    return '/accommodation';
+    return '/house';
   }
 
   componentDidMount() {
