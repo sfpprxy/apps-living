@@ -2,34 +2,28 @@ import React from 'react';
 import {Link} from 'react-router';
 import {Button, message, Popconfirm, Table} from 'antd';
 import axios from 'axios';
-import styles from './Accommodation.less';
+import styles from './House.less';
 import HouseSelector from './HouseSelector'
 import Helper from "./Helper";
 
-export default class Accommodation extends React.Component {
+export default class Parcel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // data: [],
-      pagination: {},
       loading: true,
       locale: {emptyText: 'No Data'},
-      houses: []
+      log: 'Archived',
+      operation: 'Archive'
     };
   }
 
-  fetchTableData(params = {houseName: 'PENNY BLACK HOUSE'}) {
-    axios.get(Helper.getURL() + '/api/tenants/' + params.houseName, {
+  fetchTableData(state) {
+    axios.get(Helper.getURL() + '/api/log/' + state, {
     })
       .then(jsonData => {
-        const pagination = this.state.pagination;
-        // Read total count from server
-        // pagination.total = data.totalCount;
-        pagination.total = jsonData.data.tenants.length;
         this.setState({
           loading: false,
-          tableData: jsonData.data.tenants,
-          pagination
+          tableData: jsonData.data.logs
         });
       })
       .catch(function (error) {
@@ -37,20 +31,11 @@ export default class Accommodation extends React.Component {
       });
   }
 
-  getHouseName(selected) {
-    this.setState({
-      houseName: selected
-    })
-    this.fetchTableData({houseName: selected});
+
   }
 
-  // handleEdit(roomId) {
-  //   console.log(roomId);
-  //   this.props.getRoomId(roomId);
-  // }
-
-  delete(roomId) {
-    axios.post(Helper.getURL() + '/api/delete-room', {
+  archive(roomId) {
+    axios.post(Helper.getURL() + '/api/archive/' + roomId, {
       roomId: roomId
     })
       .then(function (response) {
@@ -59,20 +44,37 @@ export default class Accommodation extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-    message.success('Delete Success '
-    );
-    setTimeout(() => this.fetchTableData({houseName: this.state.houseName}), 1000);
+    message.success('Archive Success');
+    this.fetchTableData('current');
+  }
+
+  changeLog() {
+    if (this.state.log === 'Archived') {
+      this.fetchTableData('archived');
+      this.setState({log: 'Current', operation: ''});
+    }
+    else {
+      this.fetchTableData('current');
+      this.setState({log: 'Archived', operation: 'Archive'});
+    }
+
   }
 
   componentDidMount() {
-    this.fetchTableData();
+    this.fetchTableData('current');
   }
 
   render() {
 
     const columns = [{
-      // title: 'Room ID',
-      // dataIndex: 'roomId',
+      title: 'Log ID',
+      dataIndex: 'logId'
+    }, {
+      title: 'Arrive Date',
+      dataIndex: 'arriveDate'
+    }, {
+      title: 'Collect Date',
+      dataIndex: 'collectDate'
     }, {
       title: 'House Name',
       dataIndex: 'houseName'
@@ -83,30 +85,33 @@ export default class Accommodation extends React.Component {
       title: 'Tenant Name',
       dataIndex: 'tenantName'
     }, {
-      title: 'Email Address',
-      dataIndex: 'email'
+      title: 'Code',
+      dataIndex: 'code'
     }, {
       title: 'Operation',
       render: (text, record) => (
         <span>
           <Popconfirm title="Are you sure you want to delete this room?" okText="Confirm" cancelText="Cancel"
                       onConfirm={this.delete.bind(this, record.roomId)}>
-            <a href="#">Delete</a>
+            <a href="#">Delete{record.roomId}</a>
+          <Popconfirm title="Are you sure you want to archive this record?" okText="Confirm" cancelText="Cancel"
+                      onConfirm={this.archive.bind(this, record.roomId)}>
+            <a href="#">{this.state.operation}{record.roomId}</a>
           </Popconfirm>
         </span>
       )
     }];
 
     return (
-      <div >
+      <div>
         <div className={styles.content}>
-          <HouseSelector getHouseName={this.getHouseName.bind(this)}/>
-          <Button className={styles.button} type="ghost"><Link to="/new-room">New Room</Link></Button>
-          <Button className={styles.button} type="ghost"><Link to="/edit-room">Edit Room</Link></Button>
+          <Button className={styles.button} type="ghost" onClick={this.changeLog.bind(this)}>
+            {this.state.log}
+          </Button>
         </div>
         <br/>
         <Table columns={columns}
-               rowKey={record => record.roomId}
+               rowKey={record => record.logId}
                dataSource={this.state.tableData}
                pagination={false}
                loading={this.state.loading}
@@ -117,4 +122,3 @@ export default class Accommodation extends React.Component {
     );
   }
 }
-
