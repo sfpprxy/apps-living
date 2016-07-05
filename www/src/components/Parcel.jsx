@@ -11,7 +11,8 @@ export default class RoomSelector extends React.Component {
     super(props);
     this.state = {
       loading: true,
-      locale: {emptyText: 'No Data'}
+      locale: {emptyText: 'No Data'},
+      log: 'Archived'
     };
   }
 
@@ -30,6 +31,22 @@ export default class RoomSelector extends React.Component {
   }
 
   delete() {
+
+  }
+
+  changeLog() {
+    if (this.state.log === 'Archived') {
+      this.fetchTableData('archived');
+      this.setState({
+        log: 'Current'
+      });
+    }
+    else {
+      this.fetchTableData('current');
+      this.setState({
+        log: 'Archived'
+      });
+    }
 
   }
 
@@ -74,6 +91,12 @@ export default class RoomSelector extends React.Component {
 
     return (
       <div>
+        <div className={styles.content}>
+          <Button className={styles.button} type="ghost" onClick={this.changeLog.bind(this)}>
+            {this.state.log}
+          </Button>
+        </div>
+        <br/>
         <Table columns={columns}
                rowKey={record => record.logId}
                dataSource={this.state.tableData}
