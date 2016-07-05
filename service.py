@@ -1,4 +1,5 @@
 import db
+from datetime import datetime
 
 
 def get_tenants(house_name):
@@ -57,8 +58,8 @@ def get_room(room_id):
 def new_room(data):
     house = data['house']
     room_number = data['roomNumber']
-    record = db.Room(room_id=None, house_name=house, room_number=room_number, tenant_name='', phone_number='',
-                     email='')
+    record = db.Room(room_id=None, house_name=house, room_number=room_number,
+                     tenant_name='', phone_number='', email='')
     db.db.session.add(record)
     db.db.session.commit()
     # potential type error if do not trust user
@@ -90,10 +91,14 @@ def get_log(state):
     result = db.Logbook.query.filter_by(state=state).order_by(db.Logbook.room_number)
     logs = []
     for _ in result:
+        if state == 'current':
+            collect_date = 'Waiting for collection'
+        else:
+            collect_date = _.collect_date.strftime('%d %b %Y %I:%M%p')
         log = {
             'logId': _.log_id,
-            'arriveDate': _.arrive_date,
-            'collectDate': _.collect_date,
+            'arriveDate': _.arrive_date.strftime('%d %b %Y %I:%M%p'),
+            'collectDate': collect_date,
             'roomId': _.room_id,
             'houseName': _.house_name,
             'roomNumber': _.room_number,
