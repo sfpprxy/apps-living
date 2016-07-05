@@ -12,7 +12,8 @@ export default class Parcel extends React.Component {
     this.state = {
       loading: true,
       locale: {emptyText: 'No Data'},
-      log: 'Archived'
+      log: 'Archived',
+      operation: 'Archive'
     };
   }
 
@@ -30,22 +31,31 @@ export default class Parcel extends React.Component {
       });
   }
 
-  delete() {
 
+  }
+
+  archive(roomId) {
+    axios.post(Helper.getURL() + '/api/archive/' + roomId, {
+      roomId: roomId
+    })
+      .then(function (response) {
+        // console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    message.success('Archive Success');
+    this.fetchTableData('current');
   }
 
   changeLog() {
     if (this.state.log === 'Archived') {
       this.fetchTableData('archived');
-      this.setState({
-        log: 'Current'
-      });
+      this.setState({log: 'Current', operation: ''});
     }
     else {
       this.fetchTableData('current');
-      this.setState({
-        log: 'Archived'
-      });
+      this.setState({log: 'Archived', operation: 'Archive'});
     }
 
   }
@@ -84,6 +94,9 @@ export default class Parcel extends React.Component {
           <Popconfirm title="Are you sure you want to delete this room?" okText="Confirm" cancelText="Cancel"
                       onConfirm={this.delete.bind(this, record.roomId)}>
             <a href="#">Delete{record.roomId}</a>
+          <Popconfirm title="Are you sure you want to archive this record?" okText="Confirm" cancelText="Cancel"
+                      onConfirm={this.archive.bind(this, record.roomId)}>
+            <a href="#">{this.state.operation}{record.roomId}</a>
           </Popconfirm>
         </span>
       )
