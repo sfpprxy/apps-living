@@ -6,7 +6,7 @@ import styles from './House.less';
 import HouseSelector from './HouseSelector'
 import Helper from "./Helper";
 
-export default class RoomSelector extends React.Component {
+export default class Parcel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
