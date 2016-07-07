@@ -4,6 +4,7 @@ import {Button, message, Popconfirm, Table} from 'antd';
 import axios from 'axios';
 import styles from './House.less';
 import HouseSelector from './HouseSelector'
+import RoomSelector from './RoomSelector'
 import Helper from "./Helper";
 
 export default class Parcel extends React.Component {
@@ -13,7 +14,10 @@ export default class Parcel extends React.Component {
       loading: true,
       locale: {emptyText: 'No Data'},
       log: 'Archived',
-      operation: 'Archive'
+      operation: 'Archive',
+      house: '',
+      room: '',
+      roomId: null
     };
   }
 
@@ -31,7 +35,42 @@ export default class Parcel extends React.Component {
       });
   }
 
+  changeLog() {
+    if (this.state.log === 'Archived') {
+      this.fetchTableData('archived');
+      this.setState({log: 'Current', operation: ''});
+    }
+    else {
+      this.fetchTableData('current');
+      this.setState({log: 'Archived', operation: 'Archive'});
+    }
 
+  }
+
+  getHouseName (selected) {
+    this.setState({house: selected});
+  }
+
+  getRoomNumber(selected) {
+    this.setState({room: selected});
+  }
+
+  getRoomId(roomId) {
+    this.setState({roomId: roomId});
+  }
+
+  // TODO: implement newParcel
+  newParcel () {
+    axios.post(Helper.getURL() + '/api/new-parcel', {
+      roomId: this.state.roomId
+    })
+      .then(function (response) {
+        // console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    message.info(this.state.roomId);
   }
 
   archive(roomId) {
@@ -48,17 +87,6 @@ export default class Parcel extends React.Component {
     this.fetchTableData('current');
   }
 
-  changeLog() {
-    if (this.state.log === 'Archived') {
-      this.fetchTableData('archived');
-      this.setState({log: 'Current', operation: ''});
-    }
-    else {
-      this.fetchTableData('current');
-      this.setState({log: 'Archived', operation: 'Archive'});
-    }
-
-  }
 
   componentDidMount() {
     this.fetchTableData('current');
@@ -91,9 +119,6 @@ export default class Parcel extends React.Component {
       title: 'Operation',
       render: (text, record) => (
         <span>
-          <Popconfirm title="Are you sure you want to delete this room?" okText="Confirm" cancelText="Cancel"
-                      onConfirm={this.delete.bind(this, record.roomId)}>
-            <a href="#">Delete{record.roomId}</a>
           <Popconfirm title="Are you sure you want to archive this record?" okText="Confirm" cancelText="Cancel"
                       onConfirm={this.archive.bind(this, record.roomId)}>
             <a href="#">{this.state.operation}{record.roomId}</a>
@@ -105,6 +130,14 @@ export default class Parcel extends React.Component {
     return (
       <div>
         <div className={styles.content}>
+          <HouseSelector getHouseName={this.getHouseName.bind(this)}/>
+          <div className={styles.button}>
+            <RoomSelector house={this.state.house}
+                          getRoomNumber={this.getRoomNumber.bind(this)} getRoomId={this.getRoomId.bind(this)}/>
+          </div>
+          <Button className={styles.button} type="ghost" onClick={this.newParcel.bind(this)}>
+            New Parcel
+          </Button>
           <Button className={styles.button} type="ghost" onClick={this.changeLog.bind(this)}>
             {this.state.log}
           </Button>
