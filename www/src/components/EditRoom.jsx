@@ -14,15 +14,15 @@ export default class EditRoom extends React.Component {
       house: '',
       room: '',
       name: '',
-      email: '',
+      email: ''
     };
   }
 
   getHouseName(selected) {
     this.setState({
-      house: selected
+      house: selected,
+      resetRoomSelector: true
     });
-    // this.getRoomNumber(selected);
   }
 
   getRoomNumber (selected) {
@@ -33,7 +33,8 @@ export default class EditRoom extends React.Component {
 
   getRoomId (roomId) {
     this.setState({
-      roomId: roomId
+      roomId: roomId,
+      resetRoomSelector: false
     });
     axios.get(Helper.getURL() + '/api/room/' + roomId, {
     })
@@ -50,8 +51,7 @@ export default class EditRoom extends React.Component {
 
   handleTenantChange(e) {
     this.setState({
-      name: e.target.value,
-      // selectDisabled: true
+      name: e.target.value
     });
   }
 
@@ -100,7 +100,7 @@ export default class EditRoom extends React.Component {
           <HouseSelector getHouseName={this.getHouseName.bind(this)}/>
         </div><br/>
         <div>
-          <RoomSelector house={this.state.house} getRoomNumber={this.getRoomNumber.bind(this)}
+          <RoomSelector reset={this.state.resetRoomSelector} house={this.state.house} getRoomNumber={this.getRoomNumber.bind(this)}
                         getRoomId={this.getRoomId.bind(this)}/>
         </div><br/>
         <div>
