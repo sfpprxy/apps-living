@@ -34,7 +34,7 @@ export default class EditRoom extends React.Component {
   getRoomId (roomId) {
     this.setState({
       roomId: roomId
-    })
+    });
     axios.get(Helper.getURL() + '/api/room/' + roomId, {
     })
       .then(jsonData => {
