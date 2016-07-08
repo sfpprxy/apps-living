@@ -40,15 +40,15 @@ export default class House extends React.Component {
     axios.post(Helper.getURL() + '/api/delete-room', {
       roomId: roomId
     })
-      .then(function (response) {
-        // console.log(response);
+      .then(response => {
+        console.log(response);
+        this.fetchTableData({houseName: this.state.houseName});
       })
       .catch(function (error) {
         console.log(error);
       });
     message.success('Delete Success '
     );
-    setTimeout(() => this.fetchTableData({houseName: this.state.houseName}), 1000);
   }
 
   componentDidMount() {
