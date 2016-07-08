@@ -62,7 +62,6 @@ def new_room(data):
                      tenant_name='', phone_number='', email='')
     db.db.session.add(record)
     db.db.session.commit()
-    # potential type error if do not trust user
     return house + ' ' + room_number
 
 
@@ -75,7 +74,6 @@ def update_tenant(data):
     old_email = room.first().email
     room.update(dict(tenant_name=tenant_name, email=email))
     db.db.session.commit()
-    # potential type error if do not trust user
     return 'old: ' + old_tenant_name + ' ' + old_email + ' ' + \
            'new: ' + tenant_name + ' ' + email + ' '
 
