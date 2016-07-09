@@ -83,10 +83,22 @@ def get_logs(state):
     return jsonify({'logs': service.get_logs(state)})
 
 
+# to check if a certain room has new parcel, check button could be added later in front-end
 @app.route('/api/check-log/<room_id>', methods=['GET'])
 def check_log(room_id):
     log.info('/api/rooms/' + room_id)
     return jsonify({'logs': service.check_log(room_id)})
+
+
+@app.route('/api/new-parcel', methods=['POST'])
+def new_parcel():
+    if request.json:
+        result = service.new_parcel(request.json)
+        log.info('/api/new-parcel: ' + result)
+        return result  # success = room_id, fail = 'Wrong email address format'
+    else:
+        print('no json received')
+        return 'no json received'
 
 
 if __name__ == '__main__':

@@ -66,4 +66,3 @@ class Logbook(db.Model):
         self.email = email
         self.code = code
         self.state = state
-

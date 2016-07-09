@@ -1,5 +1,7 @@
-import db
 from datetime import datetime
+from random import randint
+import db
+import appsemail
 
 
 def get_tenants(house_name):
@@ -127,3 +129,23 @@ def check_log(room_id):
         }
         logs.append(log)
     return logs
+
+
+def new_parcel(data):
+    # prepare data for sending email
+    room_id = data['roomId']
+    result = db.Room.query.filter_by(room_id=room_id).first()
+    tenant_name = result.tenant_name
+    email = result.email
+    code = str(randint(1000, 9999))
+
+    is_success = appsemail.send(email, tenant_name, code)
+    if is_success:
+        # add new parcel record
+        record = db.Log(log_id=None, arrive_date=datetime.now(), collect_date=None,
+                        room_id=room_id, code=code, state='current')
+        db.db.session.add(record)
+        db.db.session.commit()
+        return str(room_id)
+    else:
+        return 'Wrong email address format'
