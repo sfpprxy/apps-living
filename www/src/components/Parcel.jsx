@@ -92,9 +92,9 @@ export default class Parcel extends React.Component {
       });
   }
 
-  archive(roomId) {
+  archive(logId) {
     axios.post(Helper.getURL() + '/api/archive', {
-      roomId: roomId
+      logId: logId
     })
       .then(response => {
         console.log(response);
@@ -142,7 +142,7 @@ export default class Parcel extends React.Component {
       render: (text, record) => (
         <span>
           <Popconfirm title="Are you sure you want to archive this record?" okText="Confirm" cancelText="Cancel"
-                      onConfirm={this.archive.bind(this, record.roomId)}>
+                      onConfirm={this.archive.bind(this, record.logId)}>
             <a href="#">{this.state.operation}</a>
           </Popconfirm>
         </span>
