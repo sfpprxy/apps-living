@@ -93,7 +93,7 @@ export default class Parcel extends React.Component {
   }
 
   archive(roomId) {
-    axios.post(Helper.getURL() + '/api/archive/' + roomId, {
+    axios.post(Helper.getURL() + '/api/archive', {
       roomId: roomId
     })
       .then(function (response) {
