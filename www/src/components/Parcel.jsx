@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {Button, message, Popconfirm, Table} from 'antd';
+import {Button, message, Modal, Popconfirm, Table} from 'antd';
 import axios from 'axios';
 import styles from './House.less';
 import HouseSelector from './HouseSelector'
@@ -15,9 +15,11 @@ export default class Parcel extends React.Component {
       locale: {emptyText: 'No Data'},
       log: 'Archived',
       operation: 'Archive',
+      roomId: null,
       house: '',
       room: '',
-      roomId: null
+      name: '',
+      email: ''
     };
   }
 
@@ -48,7 +50,7 @@ export default class Parcel extends React.Component {
   }
 
   getHouseName (selected) {
-    this.setState({house: selected});
+    this.setState({house: selected, resetRoomSelector: true});
   }
 
   getRoomNumber(selected) {
@@ -56,7 +58,19 @@ export default class Parcel extends React.Component {
   }
 
   getRoomId(roomId) {
-    this.setState({roomId: roomId});
+    this.setState({roomId: roomId, resetRoomSelector: false});
+    axios.get(Helper.getURL() + '/api/room/' + roomId, {
+    })
+      .then(jsonData => {
+          this.setState({
+            name: jsonData.data.room[0].tenantName,
+            email: jsonData.data.room[0].email
+          });
+        }
+      )
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   // TODO: implement newParcel
@@ -64,13 +78,18 @@ export default class Parcel extends React.Component {
     axios.post(Helper.getURL() + '/api/new-parcel', {
       roomId: this.state.roomId
     })
-      .then(function (response) {
-        // console.log(response);
+      .then(response => {
+        console.log(response.data);
+        if (response.data === 'Wrong email address format') {
+          message.error('Wrong email address format, please check and update', 5);
+        } else {
+          message.success('Send Success');
+          this.fetchTableData('current');
+        }
       })
       .catch(function (error) {
         console.log(error);
       });
-    message.info(this.state.roomId);
   }
 
   archive(roomId) {
@@ -93,6 +112,9 @@ export default class Parcel extends React.Component {
   }
 
   render() {
+
+    console.log('Parcel.state:', this.state);
+    console.log('Parcel.props:', this.props);
 
     const columns = [{
       title: 'Log ID',
@@ -121,7 +143,7 @@ export default class Parcel extends React.Component {
         <span>
           <Popconfirm title="Are you sure you want to archive this record?" okText="Confirm" cancelText="Cancel"
                       onConfirm={this.archive.bind(this, record.roomId)}>
-            <a href="#">{this.state.operation}{record.roomId}</a>
+            <a href="#">{this.state.operation}</a>
           </Popconfirm>
         </span>
       )
@@ -132,7 +154,7 @@ export default class Parcel extends React.Component {
         <div className={styles.content}>
           <HouseSelector getHouseName={this.getHouseName.bind(this)}/>
           <div className={styles.button}>
-            <RoomSelector house={this.state.house}
+            <RoomSelector reset={this.state.resetRoomSelector} house={this.state.house}
                           getRoomNumber={this.getRoomNumber.bind(this)} getRoomId={this.getRoomId.bind(this)}/>
           </div>
           <Button className={styles.button} type="ghost" onClick={this.newParcel.bind(this)}>
