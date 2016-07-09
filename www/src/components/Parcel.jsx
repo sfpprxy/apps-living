@@ -96,14 +96,14 @@ export default class Parcel extends React.Component {
     axios.post(Helper.getURL() + '/api/archive', {
       roomId: roomId
     })
-      .then(function (response) {
-        // console.log(response);
+      .then(response => {
+        console.log(response);
+        message.success('Archive Success');
+        this.fetchTableData('current');
       })
       .catch(function (error) {
         console.log(error);
       });
-    message.success('Archive Success');
-    this.fetchTableData('current');
   }
 
 
