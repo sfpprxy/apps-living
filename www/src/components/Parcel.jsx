@@ -73,7 +73,6 @@ export default class Parcel extends React.Component {
       });
   }
 
-  // TODO: implement newParcel
   newParcel () {
     axios.post(Helper.getURL() + '/api/new-parcel', {
       roomId: this.state.roomId
@@ -85,6 +84,10 @@ export default class Parcel extends React.Component {
         } else {
           message.success('Send Success');
           this.fetchTableData('current');
+        }
+        // change log when in Archived
+        if (this.state.log === 'Current') {
+          this.setState({log: 'Archived', operation: 'Archive'});
         }
       })
       .catch(function (error) {
