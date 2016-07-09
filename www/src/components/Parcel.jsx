@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 import {Button, message, Modal, Popconfirm, Table} from 'antd';
 import axios from 'axios';
 import styles from './House.less';
@@ -108,7 +107,6 @@ export default class Parcel extends React.Component {
         console.log(error);
       });
   }
-
 
   componentDidMount() {
     this.fetchTableData('current');
