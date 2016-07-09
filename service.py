@@ -85,7 +85,7 @@ def delete_room(data):
     return str(room_id)
 
 
-def get_log(state):
+def get_logs(state):
     result = db.Logbook.query.filter_by(state=state).order_by(db.Logbook.room_number)
     logs = []
     for _ in result:

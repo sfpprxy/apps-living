@@ -22,7 +22,7 @@ export default class Parcel extends React.Component {
   }
 
   fetchTableData(state) {
-    axios.get(Helper.getURL() + '/api/log/' + state, {
+    axios.get(Helper.getURL() + '/api/logs/' + state, {
     })
       .then(jsonData => {
         this.setState({
