@@ -149,3 +149,11 @@ def new_parcel(data):
         return str(room_id)
     else:
         return 'Wrong email address format'
+
+
+def archive(data):
+    log_id = data['logId']
+    log = db.Log.query.filter_by(log_id=log_id)
+    log.update(dict(state='archived', collect_date=datetime.now()))
+    db.db.session.commit()
+    return str(log_id)

@@ -101,5 +101,16 @@ def new_parcel():
         return 'no json received'
 
 
+@app.route('/api/archive', methods=['POST'])
+def archive():
+    if request.json:
+        log.info('/api/archive: ' + service.archive(request.json))
+        return 'archive OK!'
+
+    else:
+        print('no json received')
+        return 'no json received'
+
+
 if __name__ == '__main__':
     app.run(debug=True)
