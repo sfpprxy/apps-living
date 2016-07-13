@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ubuntu:@139.59.172.12/ubuntu'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:@178.62.90.172/postgres'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -66,4 +66,3 @@ class Logbook(db.Model):
         self.email = email
         self.code = code
         self.state = state
-

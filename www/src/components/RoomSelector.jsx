@@ -39,14 +39,11 @@ export default class RoomSelector extends React.Component {
     });
   }
 
-  reset() {
-    if (this.props.disabled === true) {
-      this.state.selected = 'Select Room Disabled';
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     this.fetchRooms(nextProps.house);
+    if (nextProps.reset === true) {
+      this.setState({selected: 'Select Room'});
+    }
   }
 
   render() {
@@ -58,8 +55,6 @@ export default class RoomSelector extends React.Component {
       children.push(<Option key={r[i].roomNumber}>
         {r[i].roomNumber}</Option>);
     }
-
-    this.reset();
 
     console.log('RoomSelector.state:', this.state);
     console.log('RoomSelector.props:', this.props);
