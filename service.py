@@ -88,7 +88,7 @@ def delete_room(data):
 
 
 def get_logs(state):
-    result = db.Logbook.query.filter_by(state=state).order_by(db.Logbook.room_number)
+    result = db.Logbook.query.filter_by(state=state).order_by(db.Logbook.arrive_date.desc())
     logs = []
     for _ in result:
         if state == 'current':
