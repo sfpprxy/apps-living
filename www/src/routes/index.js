@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
 import {Router, Route, IndexRoute, Link} from 'react-router';
 import App from '../components/App';
-import House from '../components/House'
-import NewRoom from '../components/NewRoom'
-import EditRoom from '../components/EditRoom'
-import Parcel from '../components/Parcel'
+import House from '../components/House/House'
+import NewRoom from '../components/House/NewRoom'
+import EditRoom from '../components/House/EditRoom'
+import Parcel from '../components/Parcel/Parcel'
 
 const Routes = ({ history }) =>
   <Router history={history}>

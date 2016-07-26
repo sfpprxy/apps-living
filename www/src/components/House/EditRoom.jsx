@@ -3,8 +3,8 @@ import {Link} from 'react-router';
 import {Button, Input, message} from 'antd';
 import axios from 'axios';
 import styles from './EditRoom.less';
-import HouseSelector from './HouseSelector'
-import RoomSelector from './RoomSelector'
+import HouseSelector from '../common/HouseSelector'
+import RoomSelector from '../common/RoomSelector'
 import Helper from './Helper'
 
 export default class EditRoom extends React.Component {

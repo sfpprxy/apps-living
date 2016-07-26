@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import {Button, Input, message} from 'antd';
 import axios from 'axios';
 import styles from './NewRoom.less';
-import HouseSelector from './HouseSelector'
+import HouseSelector from '../common/HouseSelector'
 import Helper from "./Helper";
 
 export default class NewRoom extends React.Component {

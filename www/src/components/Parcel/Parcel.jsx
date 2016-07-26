@@ -1,9 +1,9 @@
 import React from 'react';
 import {Button, message, Modal, Popconfirm, Table} from 'antd';
 import axios from 'axios';
-import styles from './House.less';
-import HouseSelector from './HouseSelector'
-import RoomSelector from './RoomSelector'
+import styles from '../House/House.less';
+import HouseSelector from '../common/HouseSelector'
+import RoomSelector from '../common/RoomSelector'
 import Helper from "./Helper";
 
 export default class Parcel extends React.Component {

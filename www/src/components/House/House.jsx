@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import {Button, message, Popconfirm, Table} from 'antd';
 import axios from 'axios';
 import styles from './House.less';
-import HouseSelector from './HouseSelector'
+import HouseSelector from '../common/HouseSelector'
 import Helper from "./Helper";
 
 export default class House extends React.Component {
