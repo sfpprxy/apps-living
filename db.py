@@ -66,3 +66,15 @@ class Logbook(db.Model):
         self.email = email
         self.code = code
         self.state = state
+
+
+class User(db.Model):
+    user_id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.Text)
+    password = db.Column(db.Text)
+
+    def __init__(self, user_id, username, password):
+        self.user_id = user_id
+        self.username = username
+        self.password = password
+
