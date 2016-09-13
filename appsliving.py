@@ -1,21 +1,95 @@
+import flask
 from flask import Flask, jsonify, request
+import flask_login
 from flask_cors import CORS
 import service
 from appslogger import logger as log
 
 
 app = Flask(__name__, static_url_path='')
+app.secret_key = 'key for apps-living'
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
 CORS(app)
+
+users = service.get_users()
+
+
+class User(flask_login.UserMixin):
+    pass
+
+
+@login_manager.user_loader
+def user_loader(username):
+    if username not in users:
+        return None
+    user = User()
+    user.id = username
+    return user
+
+
+@login_manager.request_loader
+def request_loader(user_request):
+    username = user_request.form.get('username')
+    if username not in users:
+        return
+    user = User()
+    user.id = username
+    # DO NOT ever store passwords in plaintext and always compare password
+    # hashes using constant-time comparison!
+    user.is_authenticated = user_request.form['password'] == users[username]['password']
+    return user
+
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if flask.request.method == 'GET':
+        return '''
+               <form action='/' method='POST'>
+                <h1>Please login</h1>
+                <input type='text' name='username' id='username' placeholder='username'></input>
+                <input type='password' name='password' id='password' placeholder='password'></input>
+                <input type='submit' name='submit'></input>
+               </form>
+               '''
+    username = flask.request.form['username']
+    if username not in users:
+        return 'Incorrect username or password'
+    if flask.request.form['password'] == users[username]['password']:
+        user = User()
+        user.id = username
+        flask_login.login_user(user)
+        return flask.redirect(flask.url_for('index'))
+    return 'Incorrect username or password'
+
+
+@app.route('/protected')
+@flask_login.login_required
+def protected():
+    return 'Logged in as: ' + flask_login.current_user.id
+
+
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return 'Logged out'
+
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    return 'Unauthorized'
 
 
 @app.route('/hello')
+@flask_login.login_required
 def hello_world():
     log.info('Hello World!')
     return 'Hello World!'
 
 
-@app.route('/')
-def root():
+@app.route('/index')
+@flask_login.login_required
+def index():
     log.info('access index.html')
     return app.send_static_file('index.html')
 

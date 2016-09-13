@@ -157,3 +157,11 @@ def archive(data):
     log.update(dict(state='archived', collect_date=datetime.now()))
     db.db.session.commit()
     return str(log_id)
+
+
+def get_users():
+    result = db.User.query.all()
+    users = {}
+    for _ in result:
+        users[_.username] = {'password': _.password}
+    return users
