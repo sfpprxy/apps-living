@@ -151,10 +151,15 @@ def delete_room():
         return 'no json received'
 
 
-@app.route('/api/logs/<state>', methods=['GET'])
-def get_logs(state):
-    log.info('/api/log/' + state)
-    return jsonify({'logs': service.get_logs(state)})
+@app.route('/api/logs', methods=['POST'])
+def get_logs():
+    if request.json:
+        log.info('/api/logs: ' + request.json['house'] + '/' + request.json['state'])
+        return jsonify({'logs': service.get_logs(request.json)})
+
+    else:
+        print('no json received')
+        return 'no json received'
 
 
 # to check if a certain room has new parcel, check button could be added later in front-end

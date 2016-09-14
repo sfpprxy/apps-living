@@ -24,7 +24,9 @@ export default class Parcel extends React.Component {
   }
 
   fetchTableData(state) {
-    axios.get(Helper.getURL() + '/api/logs/' + state, {
+    axios.post(Helper.getURL() + '/api/logs', {
+      state: state,
+      house: this.state.house
     })
       .then(jsonData => {
         this.setState({
@@ -41,37 +43,41 @@ export default class Parcel extends React.Component {
     if (this.state.log === 'Archived') {
       this.fetchTableData('archived');
       this.setState({log: 'Current', operation: ''});
-    }
-    else {
+    } else {
       this.fetchTableData('current');
       this.setState({log: 'Archived', operation: 'Archive'});
     }
-
   }
 
   getHouseName (selected) {
-    this.setState({house: selected, resetRoomSelector: true});
+    // Sick part of react: setState() does not change the state immediately
+    this.state.house = selected;
+    if (this.state.log === 'Archived') {
+      this.fetchTableData('current');
+    } else {
+      this.fetchTableData('archived');
+    }
   }
 
-  getRoomNumber(selected) {
-    this.setState({room: selected});
-  }
-
-  getRoomId(roomId) {
-    this.setState({roomId: roomId, resetRoomSelector: false});
-    axios.get(Helper.getURL() + '/api/room/' + roomId, {
-    })
-      .then(jsonData => {
-          this.setState({
-            name: jsonData.data.room[0].tenantName,
-            email: jsonData.data.room[0].email
-          });
-        }
-      )
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+  // getRoomNumber(selected) {
+  //   this.setState({room: selected});
+  // }
+  //
+  // getRoomId(roomId) {
+  //   this.setState({roomId: roomId, resetRoomSelector: false});
+  //   axios.get(Helper.getURL() + '/api/room/' + roomId, {
+  //   })
+  //     .then(jsonData => {
+  //         this.setState({
+  //           name: jsonData.data.room[0].tenantName,
+  //           email: jsonData.data.room[0].email
+  //         });
+  //       }
+  //     )
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }
 
   archive(logId) {
     axios.post(Helper.getURL() + '/api/archive', {
@@ -133,10 +139,6 @@ export default class Parcel extends React.Component {
       <div>
         <div className={styles.content}>
           <HouseSelector getHouseName={this.getHouseName.bind(this)}/>
-          <div className={styles.button}>
-            <RoomSelector reset={this.state.resetRoomSelector} house={this.state.house}
-                          getRoomNumber={this.getRoomNumber.bind(this)} getRoomId={this.getRoomId.bind(this)}/>
-          </div>
           <Button className={styles.button} type="ghost">
             <Link to="/new-parcel">New Parcel</Link>
           </Button>
