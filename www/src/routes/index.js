@@ -5,6 +5,7 @@ import House from '../components/House'
 import NewRoom from '../components/NewRoom'
 import EditRoom from '../components/EditRoom'
 import Parcel from '../components/Parcel'
+import NewParcel from '../components/NewParcel'
 
 const Routes = ({ history }) =>
   <Router history={history}>
@@ -13,6 +14,7 @@ const Routes = ({ history }) =>
       <Route path="/house" component={House} />
       <Route path="/new-room" component={NewRoom} />
       <Route path="/edit-room" component={EditRoom} />
+      <Route path="/new-parcel" component={NewParcel} />
     </Route>
     <Route path="*" component={App}/>
   </Router>;

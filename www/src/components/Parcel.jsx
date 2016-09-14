@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import {Button, message, Modal, Popconfirm, Table} from 'antd';
 import axios from 'axios';
 import styles from './House.less';
@@ -72,28 +73,6 @@ export default class Parcel extends React.Component {
       });
   }
 
-  newParcel () {
-    axios.post(Helper.getURL() + '/api/new-parcel', {
-      roomId: this.state.roomId
-    })
-      .then(response => {
-        console.log(response.data);
-        if (response.data === 'Wrong email address format') {
-          message.error('Wrong email address format, please check and update', 5);
-        } else {
-          message.success('Send Success');
-          this.fetchTableData('current');
-        }
-        // change log when in Archived
-        if (this.state.log === 'Current') {
-          this.setState({log: 'Archived', operation: 'Archive'});
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
   archive(logId) {
     axios.post(Helper.getURL() + '/api/archive', {
       logId: logId
@@ -158,8 +137,8 @@ export default class Parcel extends React.Component {
             <RoomSelector reset={this.state.resetRoomSelector} house={this.state.house}
                           getRoomNumber={this.getRoomNumber.bind(this)} getRoomId={this.getRoomId.bind(this)}/>
           </div>
-          <Button className={styles.button} type="ghost" onClick={this.newParcel.bind(this)}>
-            New Parcel
+          <Button className={styles.button} type="ghost">
+            <Link to="/new-parcel">New Parcel</Link>
           </Button>
           <Button className={styles.button} type="ghost" onClick={this.changeLog.bind(this)}>
             {this.state.log}
