@@ -15,8 +15,8 @@ export default class House extends React.Component {
     };
   }
 
-  fetchTableData(params = {houseName: 'PENNY BLACK HOUSE'}) {
-    axios.get(Helper.getURL() + '/api/tenants/' + params.houseName, {
+  fetchTableData(params = {house: 'PENNY BLACK HOUSE'}) {
+    axios.get(Helper.getURL() + '/api/tenants/' + params.house, {
     })
       .then(jsonData => {
         this.setState({
@@ -31,9 +31,9 @@ export default class House extends React.Component {
 
   getHouseName(selected) {
     this.setState({
-      houseName: selected
-    })
-    this.fetchTableData({houseName: selected});
+      house: selected
+    });
+    this.fetchTableData({house: selected});
   }
 
   delete(roomId) {
@@ -42,7 +42,7 @@ export default class House extends React.Component {
     })
       .then(response => {
         console.log(response);
-        this.fetchTableData({houseName: this.state.houseName});
+        this.fetchTableData({house: this.state.house});
       })
       .catch(function (error) {
         console.log(error);
