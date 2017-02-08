@@ -155,7 +155,7 @@ def delete_room():
 def get_logs():
     state = request.args.get('state')
     house = request.args.get('house')
-    return jsonify({'room': service.get_logs(house, state)})
+    return jsonify({'logs': service.get_logs(house, state)})
 
 
 # to check if a certain room has new parcel, check button could be added later in front-end
