@@ -187,3 +187,14 @@ def find_log(param):
         }
         logs.append(log)
     return logs
+
+
+def get_all_emails():
+    # return a string of formatted emails
+    result = db.Room.query.with_entities(db.Room.email)
+    logs = ''
+    for _ in result:
+        if _.email is not None:
+            logs += _.email
+            logs += ';\n'
+    return logs

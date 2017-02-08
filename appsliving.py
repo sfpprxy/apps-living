@@ -193,5 +193,11 @@ def find_log(param):
     return jsonify({'logs': service.find_log(param)})
 
 
+@app.route('/api/all-emails', methods=['GET'])
+def get_all_emails():
+    log.info('/api/get-all-emails')
+    return jsonify({'emails': service.get_all_emails()})
+
+
 if __name__ == '__main__':
     app.run(debug=True)
