@@ -170,7 +170,8 @@ def get_users():
 
 def find_log(param):
     result = db.Logbook.query.filter(or_(db.Logbook.room_number.ilike('%' + param + '%'),
-                                         db.Logbook.tenant_name.ilike('%' + param + '%')))
+                                         db.Logbook.tenant_name.ilike('%' + param + '%'))).\
+                              filter(db.Logbook.collect_date == None)  # must use "==" here rather than "is"
     logs = []
     for _ in result:
         log = {
