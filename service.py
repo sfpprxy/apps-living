@@ -1,5 +1,6 @@
 from datetime import datetime
 from random import randint
+from sqlalchemy import or_
 import db
 import appsemail
 
@@ -165,3 +166,24 @@ def get_users():
     for _ in result:
         users[_.username] = {'password': _.password}
     return users
+
+
+def find_log(param):
+    result = db.Logbook.query.filter(or_(db.Logbook.room_number.ilike('%' + param + '%'),
+                                         db.Logbook.tenant_name.ilike('%' + param + '%')))
+    logs = []
+    for _ in result:
+        log = {
+            'logId': _.log_id,
+            'arriveDate': _.arrive_date,
+            'collectDate': _.collect_date,
+            'roomId': _.room_id,
+            'houseName': _.house_name,
+            'roomNumber': _.room_number,
+            'tenantName': _.tenant_name,
+            'email': _.email,
+            'code': _.code,
+            'state': _.state
+        }
+        logs.append(log)
+    return logs

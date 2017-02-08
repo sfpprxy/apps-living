@@ -1,13 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {Button, message, Modal, Popconfirm, Table} from 'antd';
+import {Button, Input, message, Modal, Popconfirm, Table} from 'antd';
 import axios from 'axios';
-import styles from './House.less';
+import styles from './Parcel.less';
 import HouseSelector from './HouseSelector'
-import RoomSelector from './RoomSelector'
 import Helper from "./Helper";
 
 export default class Parcel extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +19,8 @@ export default class Parcel extends React.Component {
       house: '',
       room: '',
       name: '',
-      email: ''
+      email: '',
+      keyword: ''
     };
   }
 
@@ -40,6 +41,10 @@ export default class Parcel extends React.Component {
         console.log(error);
       });
   }
+
+  searchLog() {
+    console.log(this.state.keyword)
+    axios.get(Helper.getURL() + '/api/find-log/' + this.state.keyword, {
     })
       .then(jsonData => {
         this.setState({
@@ -60,6 +65,12 @@ export default class Parcel extends React.Component {
       this.fetchTableData('current');
       this.setState({log: 'Archived', operation: 'Archive'});
     }
+  }
+
+  handleKeywordChange (e) {
+    this.setState({
+      keyword: e.target.value
+    });
   }
 
   getHouseName (selected) {
@@ -115,6 +126,8 @@ export default class Parcel extends React.Component {
     console.log('Parcel.state:', this.state);
     console.log('Parcel.props:', this.props);
 
+
+
     const columns = [{
       title: 'Log ID',
       dataIndex: 'logId'
@@ -148,16 +161,23 @@ export default class Parcel extends React.Component {
       )
     }];
 
+
+
     return (
       <div>
         <div className={styles.content}>
           <HouseSelector getHouseName={this.getHouseName.bind(this)}/>
-          <Button className={styles.button} type="ghost">
+          <Button className={styles.controls} type="ghost">
             <Link to="/new-parcel">New Parcel</Link>
           </Button>
-          <Button className={styles.button} type="ghost" onClick={this.changeLog.bind(this)}>
+          <Button className={styles.controls} type="ghost" onClick={this.changeLog.bind(this)}>
             {this.state.log}
           </Button>
+          <Input className={styles.controls} placeholder="Input search text"
+                 value={this.state.keyword}
+                 onChange={this.handleKeywordChange.bind(this)} style={{ width: 200}}/>
+          <Button className={styles.search} icon="search" type="ghost" onClick={this.searchLog.bind(this)}>
+            Search</Button>
         </div>
         <br/>
         <Table columns={columns}

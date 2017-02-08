@@ -187,5 +187,11 @@ def archive():
         return 'no json received'
 
 
+@app.route('/api/find-log/<param>', methods=['GET'])
+def find_log(param):
+    log.info('/api/find-log/' + param)
+    return jsonify({'logs': service.find_log(param)})
+
+
 if __name__ == '__main__':
     app.run(debug=True)
