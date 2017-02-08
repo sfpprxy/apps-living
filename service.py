@@ -87,12 +87,7 @@ def delete_room(data):
     return str(room_id)
 
 
-def get_logs(data):
-    house = data['house']
-    state = data['state']
-    print('houseName got: ' + house)
-    print('state got: ')
-    print(state)
+def get_logs(house, state):
     result = db.Logbook.query.filter_by(state=state, house_name=house).order_by(db.Logbook.arrive_date.desc())
     logs = []
     for _ in result:
