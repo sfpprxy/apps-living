@@ -5,6 +5,7 @@ from email.mime.text import MIMEText
 
 def send(toaddr, name, code):
     try:
+        fromaddr = 'appslivingreception@gmail.com'
         # test_pass_on = ['@gmail.com', '@gmail.com', '@uni.coventry.ac.uk',
         #                 '@qq.com', '@163.com']
 
@@ -21,6 +22,7 @@ def send(toaddr, name, code):
 
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
+        server.login(fromaddr, 'receptionappsliving')
         text = msg.as_string()
         server.sendmail(fromaddr, toaddr, text)
         server.quit()
