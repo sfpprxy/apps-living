@@ -23,7 +23,7 @@ def send(toaddr, name, code):
         
         Verification Code : {code}
         
-        For students staying at Manor Park, Acacia House, 44 Park Road or Falcon House, please collect* from the Manor Park Office which is open Monday-Friday 2pm-4pm.
+        For students staying at Manor Park, Acacia House, Park Road or Falcon House, please collect* from the Manor Park Office which is open Monday-Friday 2pm-4pm.
 
         *If you receive this email before 2pm, your parcel will be delivered to the Manor Park Office on the same working day.
         *If you receive this email after 2pm, your parcel will be delivered to the Manor Park Office on the next working day.
