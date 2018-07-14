@@ -59,7 +59,7 @@ def get_room(room_id):
 
 
 def new_room(data):
-    house = data['house']
+    house = data['house'].strip()
     if data['roomNumber'] == '':
         room_number = '000'
     else:
