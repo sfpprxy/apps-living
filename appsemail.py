@@ -13,31 +13,33 @@ def send(toaddr, name, code):
         msg['From'] = fromaddr
         msg['To'] = toaddr
         msg['Subject'] = 'Your parcel has arrived at APPS LIVING.'
-        body = ('Dear ' + name + ',\n\n'
-                'You have a parcel arrived at our office, please bring your ID or verification code to collect.' '\n\n'
-                'Verification Code: ' + code + '\n\n'
-                'Kind Regards,\n\n'
-                'APPS Living Service Team')
-        new_body = """
+        body = """
         Dear {name},
         
-        Your parcel has been delivered to our main office. To collect your parcel please do the
-        following:
+        Your parcel has been received by APPS LIVING. To collect your parcel please do the following:
+
         - Bring your Student ID
-        - Show reception your verification code
+        - Show your verification code to the member of staff
         
         Verification Code : {code}
         
-        Please note : If you would like someone else to collect your parcel, please send a verification
-        message to a member of staff.
+        For students staying at Manor Park, Acacia House, 44 Park Road or Falcon House, please collect* from the Manor Park Office which is open Monday-Friday 2pm-4pm.
+
+        *If you receive this email before 2pm, your parcel will be delivered to the Manor Park Office on the same working day.
+        *If you receive this email after 2pm, your parcel will be delivered to the Manor Park Office on the next working day.
+
+        For students staying at the rest of properties of APPS LIVING please collect* from the Main Office. 
+        
+        Please note: If you would like someone else to collect your parcel, please send a verification message 
+        to a member of staff via WeChat: APPSLIVINGHELP
+
         
         Kind Regards,
         
-        Student Service Team
         APPS LIVING
         """.format(name=name, code=code)
 
-        msg.attach(MIMEText(new_body, 'plain'))
+        msg.attach(MIMEText(body, 'plain'))
 
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
