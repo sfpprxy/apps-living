@@ -109,7 +109,8 @@ def get_logs(house, state):
             'tenantName': _.tenant_name,
             'email': _.email,
             'code': _.code,
-            'state': _.state
+            'state': _.state,
+            'note': _.note
         }
         logs.append(log)
     return logs
@@ -129,7 +130,8 @@ def check_log(room_id):
             'tenantName': _.tenant_name,
             'email': _.email,
             'code': _.code,
-            'state': _.state
+            'state': _.state,
+            'note': _.note
         }
         logs.append(log)
     return logs
@@ -142,17 +144,27 @@ def new_parcel(data):
     tenant_name = result.tenant_name
     email = result.email
     code = str(randint(1000, 9999))
+    note = data['note']
 
     is_success = appsemail.send(email, tenant_name, code)
     if is_success:
         # add new parcel record
         record = db.Log(log_id=None, arrive_date=datetime.now(), collect_date=None,
-                        room_id=room_id, code=code, state='current')
+                        room_id=room_id, code=code, state='current', note=note)
         db.db.session.add(record)
         db.db.session.commit()
         return str(room_id)
     else:
         return 'Wrong email address format'
+
+
+def update_note(data):
+    log_id = data['logId']
+    note = data['note']
+    log = db.Log.query.filter_by(log_id=log_id)
+    log.update(dict(note=note))
+    db.db.session.commit()
+    return str(log_id)
 
 
 def archive(data):
@@ -189,7 +201,8 @@ def find_log(param):
             'tenantName': _.tenant_name,
             'email': _.email,
             'code': _.code,
-            'state': _.state
+            'state': _.state,
+            'note': _.note
         }
         logs.append(log)
     return logs

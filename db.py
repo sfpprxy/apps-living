@@ -32,14 +32,16 @@ class Log(db.Model):
     room_id = db.Column(db.Integer)  # ref: Room.room_id
     code = db.Column(db.Integer)
     state = db.Column(db.Text)
+    note = db.Column(db.Text)
 
-    def __init__(self, log_id, arrive_date, collect_date, room_id, code, state):
+    def __init__(self, log_id, arrive_date, collect_date, room_id, code, state, note):
         self.log_id = log_id
         self.arrive_date = arrive_date
         self.collect_date = collect_date
         self.room_id = room_id
         self.code = code
         self.state = state
+        self.note = note
 
 
 class Logbook(db.Model):
@@ -53,9 +55,10 @@ class Logbook(db.Model):
     email = db.Column(db.Text)
     code = db.Column(db.Integer)
     state = db.Column(db.Text)
+    note = db.Column(db.Text)
 
     def __init__(self, log_id, arrive_date, collect_date, room_id,
-                 house_name, room_number, tenant_name, email, code, state):
+                 house_name, room_number, tenant_name, email, code, state, note):
         self.log_id = log_id
         self.arrive_date = arrive_date
         self.collect_date = collect_date
@@ -66,6 +69,7 @@ class Logbook(db.Model):
         self.email = email
         self.code = code
         self.state = state
+        self.note = note
 
 
 class User(db.Model):

@@ -176,6 +176,17 @@ def new_parcel():
         return 'no json received'
 
 
+@app.route('/api/update-note', methods=['POST'])
+def update_note():
+    if request.json:
+        result = service.update_note(request.json)
+        log.info('/api/update-note: ' + result)
+        return result
+    else:
+        print('no json received')
+        return 'no json received'
+
+
 @app.route('/api/archive', methods=['POST'])
 def archive():
     if request.json:

@@ -15,7 +15,8 @@ export default class NewParcel extends React.Component {
       room: '',
       name: '',
       email: '',
-      roomId: null
+      roomId: null,
+      note: ''
     };
   }
 
@@ -29,6 +30,12 @@ export default class NewParcel extends React.Component {
   getRoomNumber(selected) {
     this.setState({
       room: selected
+    });
+  }
+
+  handleNoteChange (e) {
+    this.setState({
+      note: e.target.value
     });
   }
 
@@ -51,7 +58,8 @@ export default class NewParcel extends React.Component {
 
   addParcel() {
     axios.post(Helper.getURL() + '/api/new-parcel', {
-      roomId: this.state.roomId
+      roomId: this.state.roomId,
+      note: this.state.note
     })
       .then(response => {
         console.log(response.data);
@@ -92,6 +100,12 @@ export default class NewParcel extends React.Component {
                         getRoomId={this.getRoomId.bind(this)}/>
         </div>
         <br/>
+        {/*2018-07-31 flip todo*/}
+        {/*<div>*/}
+          {/*<Input placeholder="Input note" value={this.state.note}*/}
+                 {/*onChange={this.handleNoteChange.bind(this)} style={{ width: 200}}/>*/}
+        {/*</div>*/}
+        {/*<br/>*/}
         <div>
           <Button type="primary" onClick={this.addParcel.bind(this)} style={{ width: 100}}>Add Parcel</Button>
           <Button type="ghost" onClick={this.leave.bind(this)} style={{ width: 100}}>

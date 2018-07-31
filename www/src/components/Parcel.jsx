@@ -20,7 +20,10 @@ export default class Parcel extends React.Component {
       room: '',
       name: '',
       email: '',
-      keyword: ''
+      keyword: '',
+      visible: false,
+      currentLogId: null,
+      currentNote: ''
     };
   }
 
@@ -117,6 +120,44 @@ export default class Parcel extends React.Component {
       });
   }
 
+  showNote(record) {
+    this.setState({
+      visible: true,
+      currentLogId: record.logId,
+      currentNote: record.note,
+    });
+  }
+
+  handleNoteChange (e) {
+    this.setState({
+      currentNote: e.target.value
+    });
+  }
+
+  handleOk() {
+    axios.post(Helper.getURL() + '/api/update-note', {
+      logId: this.state.currentLogId,
+      note: this.state.currentNote
+    })
+      .then(response => {
+        console.log(response);
+        message.success('Update Success');
+        this.fetchTableData('current');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    this.setState({
+      visible: false,
+    });
+  }
+
+  handleCancel(e) {
+    this.setState({
+      visible: false,
+    });
+  }
+
   componentDidMount() {
     this.fetchTableData('current');
   }
@@ -159,7 +200,17 @@ export default class Parcel extends React.Component {
           </Popconfirm>
         </span>
       )
-    }];
+    }
+    // 2018-07-31 flip todo
+    // , {
+    //   title: 'Note',
+    //   render: (text, record) => (
+    //     <span>
+    //         <a href="#" onClick={this.showNote.bind(this, record)}>{record.note}</a>
+    //     </span>
+    //   )
+    // }
+    ];
 
 
 
@@ -188,6 +239,12 @@ export default class Parcel extends React.Component {
                locale={this.state.locale}
         />
         <br/><br/><br/>
+        <Modal title="Note"  okText="Update" cancelText="Cancel" visible={this.state.visible}
+               onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}>
+          <Input className={styles.controls} placeholder="Input note"
+                 value={this.state.currentNote}
+                 onChange={this.handleNoteChange.bind(this)} style={{ width: 200}}/>
+        </Modal>
       </div>
     );
   }
