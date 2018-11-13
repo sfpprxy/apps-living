@@ -15,27 +15,30 @@ def send(toaddr, name, code):
         msg['Subject'] = 'Your parcel has arrived at APPS LIVING.'
         # indent due to python multi-line string
         body = """
-Dear {name},
+Dear Student,
 
-Your parcel has been received by APPS LIVING. To collect your parcel please do the following:
+Your parcel has been delivered to our main office (APPS LIVING HQ). To collect your parcel please do the following:
 
-- Bring your Student ID
-- Show your verification code to the member of staff
+-       Bring your student ID 
+
+-       Show reception your verification code
+
+Alternatively, if you live in the following buildings:
+-       Manor Park
+-       Falcon House
+-       Acacia House  
+then you are able to collect your parcel between 2pm-4pm every Wednesdays and Thursdays from the Manor Park Office. If you would like to receive before this day or at any other time, then you are able to collect from our main office at APPS LIVING HQ during opening hours. 
+
 
 Verification Code : {code}
 
-For students staying at Manor Park, Acacia House, Park Road or Falcon House, please collect* from the Manor Park Office which is open Monday-Friday 2pm-4pm.
 
-*If you receive this email before 2pm, your parcel will be delivered to the Manor Park Office on the same working day.
-*If you receive this email after 2pm, your parcel will be delivered to the Manor Park Office on the next working day.
+Please note: If you would like someone else to collect your parcel, please send a verification message to a member of staff. 
 
-For students staying at the rest of properties of APPS LIVING please collect* from the Main Office. 
-
-Please note: If you would like someone else to collect your parcel, please send a verification message to a member of staff via WeChat: APPSLIVINGHELP
 
 Kind Regards,
 
-APPS LIVING
+Student Service Team
         """.format(name=name, code=code)
         print(body)
 
