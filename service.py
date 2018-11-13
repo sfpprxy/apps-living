@@ -144,7 +144,7 @@ def new_parcel(data):
     tenant_name = result.tenant_name
     email = result.email
     code = str(randint(1000, 9999))
-    note = data['note']
+    note = data.get('note', '')
 
     is_success = appsemail.send(email, tenant_name, code)
     if is_success:
