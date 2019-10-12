@@ -25,16 +25,18 @@ Your parcel has been delivered to our main office (APPS LIVING HQ). To collect y
 
 Alternatively, if you live in the following buildings:
 -       Manor Park
--       Falcon House
 -       Acacia House  
-then you are able to collect your parcel between 2pm-4pm every Wednesdays and Thursdays from the Manor Park Office. If you would like to receive before this day or at any other time, then you are able to collect from our main office at APPS LIVING HQ during opening hours. 
+
+Then you are able to collect your parcel between 1pm-4pm every Wednesdays and Thursdays from the Manor Park Office. If you would like to collect the parcel before this day or at any other time, then you will be able to do this from our main office at APPS LIVING HQ during office hours. 
 
 
 Verification Code : {code}
 
 
-Please note: If you would like someone else to collect your parcel, please send a verification message to a member of staff. 
+Please note: If you would like someone else to collect your parcel, please send a verification message to a member of staff through email (student.services@apps-living.co.uk) or WeChat (APPSLIVINGHELP).
+Please include your Full name, the individual's Full name and the Verification Code you have received from us; please ensure the individual is able to provide their ID upon collection.
 
+Thank you.
 
 Kind Regards,
 
