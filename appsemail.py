@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 
 def send(toaddr, name, code):
     try:
-        fromaddr = 'appslivingreception@gmail.com'
+        fromaddr = 'appslivingreception@outlook.com'
         # test_pass_on = ['@gmail.com', '@gmail.com', '@uni.coventry.ac.uk',
         #                 '@qq.com', '@163.com']
 
@@ -17,38 +17,39 @@ def send(toaddr, name, code):
         body = """
 Dear Student,
 
+
 Your parcel has been delivered to our main office (APPS LIVING HQ). To collect your parcel please do the following:
 
 -       Bring your student ID 
-
 -       Show reception your verification code
-
-Alternatively, if you live in the following buildings:
--       Manor Park
--       Acacia House  
-
-Then you are able to collect your parcel between 1pm-4pm every Wednesdays and Thursdays from the Manor Park Office. If you would like to collect the parcel before this day or at any other time, then you will be able to do this from our main office at APPS LIVING HQ during office hours. 
-
 
 Verification Code : {code}
 
 
-Please note: If you would like someone else to collect your parcel, please send a verification message to a member of staff through email (student.services@apps-living.co.uk) or WeChat (APPSLIVINGHELP).
-Please include your Full name, the individual's Full name and the Verification Code you have received from us; please ensure the individual is able to provide their ID upon collection.
+Please see below for parcel collection times;
 
-Thank you.
+Monday - Friday
+10:00am - 12:00pm
 
-Kind Regards,
+If you cannot collect your parcel at this time, please contact our Student Services team to re-arrange. 
 
-Student Service Team
+There may be other students collecting their parcels at the same time.
+Please form a queue outside the APPS LIVING office and take in to consideration the social distancing guidelines set out by the UK government.
+
+We will look forward to seeing you.
+
+King Regards,
+
+Reception
+APPS LIVING
         """.format(name=name, code=code)
         print(body)
 
         msg.attach(MIMEText(body, 'plain'))
 
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = smtplib.SMTP('smtp.office365.com', 587)
         server.starttls()
-        server.login(fromaddr, 'receptionappsliving')
+        server.login(fromaddr, '2834corporationstreet')
         text = msg.as_string()
         server.sendmail(fromaddr, toaddr, text)
         server.quit()
