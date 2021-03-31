@@ -27,7 +27,7 @@ export default class Helper extends React.Component {
   }
 
   static getURL() {
-    return 'http://178.62.90.172:5002'
+    return 'http://sh.asdk.io:5002'
   }
 
   render() {

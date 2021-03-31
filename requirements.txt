@@ -2,5 +2,6 @@ Flask
 Flask-Login
 Flask-Cors
 Flask-SQLAlchemy
-psycopg2
+#psycopg2
+psycopg2cffi
 tornado
