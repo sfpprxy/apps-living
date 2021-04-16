@@ -29,7 +29,7 @@ Verification Code : {code}
 Please see below for parcel collection times;
 
 Monday - Friday
-10:00am - 12:00pm
+10:00am - 16:00pm
 
 If you cannot collect your parcel at this time, please contact our Student Services team to re-arrange. 
 
