@@ -5,3 +5,4 @@ Flask-SQLAlchemy
 #psycopg2
 psycopg2cffi
 tornado
+requests

@@ -3,6 +3,7 @@ from random import randint
 from sqlalchemy import or_
 import db
 import appsemail
+import appsemailhttp
 
 
 def get_tenants(house_name):
@@ -146,7 +147,7 @@ def new_parcel(data):
     code = str(randint(1000, 9999))
     note = data.get('note', '')
 
-    is_success = appsemail.send(email, tenant_name, code)
+    is_success = appsemailhttp.send(email, tenant_name, code)
     if is_success:
         # add new parcel record
         record = db.Log(log_id=None, arrive_date=datetime.now(), collect_date=None,
